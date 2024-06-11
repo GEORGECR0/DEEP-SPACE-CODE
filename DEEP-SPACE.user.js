@@ -9,8 +9,8 @@
 // @license      MIT
 // @supportURL   https://github.com/damirarh/GreasyForkScripts
 // @grant        none
-// @downloadURL  https://raw.githubusercontent.com/yourusername/yourrepository/main/DEEP_SPACE.user.js
-// @updateURL    https://raw.githubusercontent.com/yourusername/yourrepository/main/DEEP_SPACE.meta.js
+// @downloadURL  https://raw.githubusercontent.com/GEORGECR0/DEEP-SPACE-CODE/main/DEEP-SPACE.user.js
+// @updateURL    https://raw.githubusercontent.com/GEORGECR0/DEEP-SPACE-CODE/main/DEEP-SPACE.user.js
 // ==/UserScript==
 
 setInterval(function() {
@@ -42,4 +42,35 @@ setInterval(function() {
         'use strict';
         setInterval(function() {
             const hotbarslots = document.querySelectorAll(".item");
-            const selectedslot = document.querySelectorAll(".
+            const selectedslot = document.querySelectorAll(".SelectedItem");
+            if (hotbarslots) {
+                hotbarslots.forEach(function(hotbar) {
+                    hotbar.style.borderRadius = "8px";
+                    hotbar.style.borderColor = "#000000";
+                    hotbar.style.backgroundColor = "transparent";
+                    hotbar.style.boxShadow = "none";
+                    hotbar.style.outline = "transparent";
+                });
+            }
+            if (selectedslot) {
+                selectedslot.forEach(function(slot) {
+                    slot.style.backgroundColor = "transparent";
+                    slot.style.boxShadow = "none";
+                    slot.style.borderRadius = "15px";
+                    slot.style.borderColor = "#FFFFFF";
+                    slot.style.outline = "transparent";
+                });
+            }
+        }, 1);
+    })();
+
+    document.querySelectorAll('.AvailableGame').forEach(item => {
+        item.style.border = "none";
+    });
+
+    for (let i = 0; i < names.length; i++) {
+        names[i].style.textShadow = "none";
+        imgedits[i].style.border = "none";
+        imgedits[i].style.boxShadow = "0px 10px 20px rgba(0, 0, 0, 0.4)";
+    }
+}, 1000);

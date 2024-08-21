@@ -14,9 +14,14 @@
 (function() {
     //copyright DEEP SPACE pls dont copy if you gonna copy some parts reach me on discord
     'use strict';
+    let colorPicker1Value = 'transparent';
+    let colorPicker2Value = '#000000';
+    let colorPicker3Value = '#transparent';
+    let colorPicker4Value = '#FFFFFF';
     let crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/d81e6523-1d08-11ef-8eba-878efb6f53d1.gif';
     let CrossSize = '19';
     let CrossOpacity = '1';
+
 
 
     function updateGameAppearance() {
@@ -97,17 +102,17 @@
 
         document.querySelectorAll(".item").forEach(hotbar => {
             hotbar.style.borderRadius = "12px";
-            hotbar.style.borderColor = "#000000";
-            hotbar.style.backgroundColor = "transparent";
+            hotbar.style.borderColor = colorPicker2Value;
+            hotbar.style.backgroundColor = colorPicker1Value;
             hotbar.style.boxShadow = "none";
             hotbar.style.outline = "transparent";
         });
 
         document.querySelectorAll(".SelectedItem").forEach(slot => {
-            slot.style.backgroundColor = "transparent";
+            slot.style.backgroundColor = colorPicker3Value;
             slot.style.boxShadow = "none";
             slot.style.borderRadius = "15px";
-            slot.style.borderColor = "#FFFFFF";
+            slot.style.borderColor = colorPicker4Value;
             slot.style.outline = "transparent";
         });
 
@@ -167,7 +172,45 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
         });
     }
 
-    setInterval(updateGameAppearance, 100);
+    setInterval(updateGameAppearance, 10);
+
+const createhud = (id, zIndex) => {
+    const hud = document.createElement('div');
+    hud.id = id;
+    hud.style.position = 'fixed';
+    hud.style.width = '100%';
+    hud.style.height = '114%';
+    hud.style.display = 'block';
+    hud.style.zIndex = zIndex;
+
+    // Make the HUD itself click-through
+    hud.style.pointerEvents = 'none';
+
+    // Ensure child elements are interactive
+    hud.addEventListener('mouseover', (event) => {
+        if (event.target !== hud) {
+            // Re-enable pointer events on child elements
+            event.target.style.pointerEvents = 'auto';
+        }
+    });
+
+    // Handle dynamic child elements by ensuring pointer-events is set to auto
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1) { // Ensure it's an element
+                    node.style.pointerEvents = 'auto';
+                }
+            });
+        });
+    });
+
+    observer.observe(hud, { childList: true, subtree: true });
+
+    document.body.appendChild(hud);
+    return hud;
+};
+    const mainHud = createhud('toggleHud', '1003');
 
     const createBox = (id, zIndex) => {
         const box = document.createElement('div');
@@ -185,7 +228,7 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
         box.style.padding = '20px';
         box.style.overflowY = 'auto';
         box.style.zIndex = zIndex;
-        document.body.appendChild(box);
+        mainHud.appendChild(box);
         return box;
     };
         const createmenu = (id, zIndex) => {
@@ -204,9 +247,11 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
         menu.style.display = 'none';
         menu.style.padding = '20px';
         menu.style.zIndex = zIndex;
-        document.body.appendChild(menu);
+        mainHud.appendChild(menu);
         return menu;
     };
+
+
     const mainMenu = createmenu('toggleMenu', '1000');
     const mainBox = createBox('toggleBox', '1000');
     const settingsModal = createBox('settingsModal', '1001');
@@ -232,6 +277,9 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
 
                          const Cosmetics = createBox('Cosmetics', '1002');
     Cosmetics.style.backgroundColor = 'rgb(40, 40, 40)'
+
+                            const resolutionSettingsModal = createBox('resolutionSettingsModal', '1002');
+    resolutionSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)'
 
     const closeIcon = document.createElement('button');
     closeIcon.textContent = '✖';
@@ -492,14 +540,8 @@ function createSelectedItemBox() {
     selectedItemBox.style.display = 'flex';
     selectedItemBox.style.alignItems = 'center';
     selectedItemBox.style.justifyContent = 'center';
-    document.body.appendChild(selectedItemBox);
+    mainHud.appendChild(selectedItemBox);
 
-            document.addEventListener('keydown', function(event) {
-    var key = event.key;
-    if (cinematicToggleButton.textContent === 'Enabled' && (key === 'h' || key === 'H')) {
-                selectedItemBox.style.visibility = selectedItemBox.style.visibility === 'hidden' ? 'visible' : 'hidden';
-    }
-});
 
     function updateSelectedItems() {
         const indices = [46, 47, 48, 49, 50];
@@ -800,7 +842,7 @@ function createCPSCounter() {
     cpsCounter.style.zIndex = '1000';
     cpsCounter.innerText = 'CPS: 0';
     cpsCounter.style.cursor = 'pointer';
-    document.body.appendChild(cpsCounter);
+    mainHud.appendChild(cpsCounter);
 
 let isMoving = false;
 let OffsetCX = 0;
@@ -923,7 +965,7 @@ function createPingCounter() {
     pingCounter.style.zIndex = '1000';
     pingCounter.innerText = 'Ping: 0 ms';
     pingCounter.style.cursor = 'pointer';
-    document.body.appendChild(pingCounter);
+    mainHud.appendChild(pingCounter);
 
 let isMoving = false;
 let OffsetPX = 0;
@@ -1041,14 +1083,8 @@ function createHandItemBox() {
     HandHItemBox.style.alignItems = 'center';
     HandHItemBox.style.justifyContent = 'center';
 
-    document.body.appendChild(HandHItemBox);
+    mainHud.appendChild(HandHItemBox);
 
-        document.addEventListener('keydown', function(event) {
-    var key = event.key;
-    if (cinematicToggleButton.textContent === 'Enabled' && (key === 'h' || key === 'H')) {
-                HandHItemBox.style.visibility = HandHItemBox.style.visibility === 'hidden' ? 'visible' : 'hidden';
-    }
-});
 
 }
 
@@ -1068,6 +1104,7 @@ function updateHandItems() {
                 margin: '0',
                 padding: '0',
                 border: 'none',
+                background: 'none',
                 width: '100%',
                 height: '100%',
                 boxSizing: 'border-box'
@@ -1151,11 +1188,10 @@ row2.appendChild(cinematicBox);
 
 document.addEventListener('keydown', function(event) {
     var key = event.key;
-            var wholeAppWrapper = document.querySelector('.WholeAppWrapper');
+    var wholeAppWrapper = document.querySelector('.WholeAppWrapper');
     if (cinematicToggleButton.textContent === 'Enabled' && (key === 'h' || key === 'H')) {
         wholeAppWrapper.style.visibility = wholeAppWrapper.style.visibility === 'hidden' ? 'visible' : 'hidden';
-        pingCounter.style.visibility = pingCounter.style.visibility === 'hidden' ? 'visible' : 'hidden';
-        cpsCounter.style.visibility = cpsCounter.style.visibility === 'hidden' ? 'visible' : 'hidden';
+            mainHud.style.visibility = mainHud.style.visibility === 'hidden' ? 'visible' : 'hidden';
     }
 });
 // Create keystrokeBox
@@ -1231,13 +1267,8 @@ Object.assign(container.style, {
     opacity: "70%",
     cursor : 'pointer'
 });
-document.body.appendChild(container);
-                document.addEventListener('keydown', function(event) {
-    var key = event.key;
-    if (cinematicToggleButton.textContent === 'Enabled' && (key === 'h' || key === 'H')) {
-                container.style.visibility = container.style.visibility === 'hidden' ? 'visible' : 'hidden';
-    }
-});
+mainHud.appendChild(container);
+
 
 // Dragging functionality
 let isMoving = false;
@@ -1362,8 +1393,8 @@ document.addEventListener('mouseup', ({ button }) => {
 hotbarImage.style.backgroundImage = 'url(https://i.postimg.cc/gcgNW3Rk/dfgdfgdfgdfgdfg.png)';
 hotbarImage.style.backgroundRepeat = "no-repeat";
 hotbarImage.style.backgroundSize = "contain";
-hotbarImage.style.width = '65px';
-hotbarImage.style.height = '65px';
+hotbarImage.style.width = '75px';
+hotbarImage.style.height = '75px';
 hotbarBox.appendChild(hotbarImage);
 
     const hotbarButtonContainer = document.createElement('div');
@@ -1408,11 +1439,110 @@ hotbarBox.appendChild(hotbarImage);
     hotbarBox.appendChild(hotbarButtonContainer);
     row3.appendChild(hotbarBox);
 
+       const resolutionBox = document.createElement('div');
+    resolutionBox.style.width = '170px';
+    resolutionBox.style.height = '170px';
+    resolutionBox.style.backgroundColor = 'rgb(50, 50, 50)';
+    resolutionBox.style.display = 'flex';
+    resolutionBox.style.border = '2px solid rgb(60, 60, 60)';
+    resolutionBox.style.flexDirection = 'column';
+    resolutionBox.style.justifyContent = 'space-between';
+    resolutionBox.style.alignItems = 'center';
+    resolutionBox.style.padding = '10px';
+    resolutionBox.style.borderRadius = '10px';
+
+
+
+    const resolutionText = document.createElement('span');
+    resolutionText.textContent = 'RESOLUTION';
+    resolutionBox.appendChild(resolutionText);
+
+        const resolution2Text = document.createElement('span');
+    resolution2Text.textContent = 'ADJUSTER';
+    resolution2Text.style.marginTop = '-5px';
+    resolutionBox.appendChild(resolution2Text);
+
+                    const resolutionImage = document.createElement('div');
+resolutionImage.style.backgroundImage = 'url(https://i.postimg.cc/05tzS2jf/res-adjuster-lol-cool-pic-too.png)';
+resolutionImage.style.backgroundRepeat = "no-repeat";
+resolutionImage.style.backgroundSize = "contain";
+resolutionImage.style.width = '65px';
+resolutionImage.style.height = '65px';
+resolutionImage.style.marginBottom = '20px';
+resolutionBox.appendChild(resolutionImage);
+
+    const resolutionButtonContainer = document.createElement('div');
+    resolutionButtonContainer.style.display = 'flex';
+    resolutionButtonContainer.style.justifyContent = 'space-between';
+    resolutionButtonContainer.style.width = '100%';
+
+    const resolutionToggleButton = document.createElement('button');
+    resolutionToggleButton.textContent = 'Enabled';
+    resolutionToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
+    resolutionToggleButton.style.borderRadius = '10px';
+    resolutionToggleButton.style.border = 'none';
+    resolutionToggleButton.style.color = 'white';
+    resolutionToggleButton.style.width = '100px';
+    resolutionToggleButton.style.height = '40px';
+    resolutionToggleButton.style.fontSize = '18px';
+    resolutionToggleButton.style.cursor = 'pointer';
+    resolutionToggleButton.addEventListener('click', function() {
+        if (resolutionToggleButton.textContent === 'Enabled') {
+            resolutionToggleButton.textContent = 'Disabled';
+        } else {
+            resolutionToggleButton.textContent = 'Enabled';
+        }
+    });
+    resolutionButtonContainer.appendChild(resolutionToggleButton);
+
+    const resolutionSettingsButton = document.createElement('button');
+    resolutionSettingsButton.innerHTML = '⚙';
+    resolutionSettingsButton.style.backgroundColor = 'rgb(40, 40, 40)';
+    resolutionSettingsButton.style.borderRadius = '10px';
+    resolutionSettingsButton.style.border = 'none';
+    resolutionSettingsButton.style.color = 'white';
+    resolutionSettingsButton.style.fontSize = '24px';
+    resolutionSettingsButton.style.width = '40px';
+    resolutionSettingsButton.style.height = '40px';
+    resolutionSettingsButton.style.cursor = 'pointer';
+    resolutionSettingsButton.addEventListener('click', function() {
+       resolutionSettingsModal.style.display = 'block';
+    });
+    resolutionButtonContainer.appendChild(resolutionSettingsButton);
+
+    resolutionBox.appendChild(resolutionButtonContainer);
+
+    row3.appendChild(resolutionBox);
+
+    resolutionSettingsModal.innerHTML = `
+        <label>RESOLUTION ADJUSTER</label>
+    <button id="closeResolutionSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+            <input type="range" id="zoomSlider" min="1" max="5" step="0.1" value="1.0" style="width: 20%;">
+        <label id="zoomValueLabel">Zoom: 1.0x</label>
+    `;
+
 hotbarSettingsModal.innerHTML = `
     <label>HOTBAR</label>
     <button id="closeHotbarSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+    <div>
+        <label for="colorPicker1">Color 1:</label>
+        <input type="color" id="colorPicker1" name="colorPicker1" value="transparent">
+
+    </div>
+    <div>
+        <label for="colorPicker2">Color 2:</label>
+        <input type="color" id="colorPicker2" name="colorPicker2" value="#0000000">
+    </div>
+    <div>
+        <label for="colorPicker3">Color 3:</label>
+        <input type="color" id="colorPicker3" name="colorPicker3" value="transparent">
+    </div>
+    <div>
+        <label for="colorPicker4">Color 4:</label>
+        <input type="color" id="colorPicker4" name="colorPicker4" value="#ffffff">
     </div>
 `;
+
 
 
 
@@ -1542,6 +1672,88 @@ document.getElementById('crosshairSizeSlider').addEventListener('input', functio
             document.getElementById('sliderValue').textContent = this.value;
     })
 
+document.getElementById('colorPicker1').addEventListener('input', function() {
+    colorPicker1Value = this.value;
+    document.querySelectorAll(".item").forEach(hotbar => {
+        hotbar.style.backgroundColor = colorPicker1Value;
+    });
+});
+
+document.getElementById('colorPicker2').addEventListener('input', function() {
+    colorPicker2Value = this.value;
+    document.querySelectorAll(".item").forEach(hotbar => {
+        hotbar.style.borderColor = colorPicker2Value;
+    });
+});
+
+document.getElementById('colorPicker3').addEventListener('input', function() {
+    colorPicker3Value = this.value;
+    document.querySelectorAll(".SelectedItem").forEach(slot => {
+        slot.style.backgroundColor = colorPicker3Value;
+    });
+});
+
+document.getElementById('colorPicker4').addEventListener('input', function() {
+    colorPicker4Value = this.value;
+    document.querySelectorAll(".SelectedItem").forEach(slot => {
+        slot.style.borderColor = colorPicker4Value;
+    });
+});
+
+    const zoomSlider = document.getElementById('zoomSlider');
+    const zoomValueLabel = document.getElementById('zoomValueLabel');
+
+    zoomSlider.oninput = function() {
+        let zoomLevel = parseFloat(zoomSlider.value);
+        zoomValueLabel.innerText = `Zoom: ${zoomLevel}x`;
+        adjustZoom(zoomLevel);
+    };
+
+function adjustZoom(zoomLevel) {
+    // Apply zoom to the entire document body
+    document.body.style.zoom = zoomLevel;
+
+    // Select elements that should remain unaffected by zoom
+    const elementsToNeutralize = document.querySelectorAll('.WholeAppWrapper, .ForceRotateBackground , #toggleHud');
+
+    elementsToNeutralize.forEach(function(element) {
+        // Remove previous transform and positioning
+        element.style.transform = '';
+        element.style.transformOrigin = '';
+        element.style.top = '';
+        element.style.left = '';
+
+
+        // Apply zoom-neutralizing transform to the element
+        const scale = 1 / zoomLevel;
+        element.style.transform = `scale(${scale})`;
+        element.style.transformOrigin = 'top left';
+
+        // Ensure the element is positioned correctly
+        if (element.id === 'toggleHud') {
+
+            // Calculate the new position to counteract the zoom effect
+            const rect = element.getBoundingClientRect();
+            element.style.top = `${rect.top / scale}px`;
+            element.style.left = `${rect.left / scale}px`;
+
+            // Also adjust width and height to counteract zoom
+            element.style.width = `${rect.width / scale}px`;
+            element.style.height = `${rect.height / scale}px`;
+        }
+    });
+}
+
+// Example usage: set the zoom level to 1.0 (no zoom)
+adjustZoom(1.0);
+
+
+
+
+
+
+
+
 let toggleKey = 'ShiftRight';
 let boxVisible = false;
 let isSettingKey = false;
@@ -1552,17 +1764,18 @@ document.addEventListener('keydown', function(event) {
         document.getElementById('customKey').value = toggleKey;
         isSettingKey = false;
     } else if (event.code === toggleKey) {
-        if (settingsModal.style.display === 'none' &&
-            crosshairSettingsModal.style.display === 'none' &&
-            cpsSettingsModal.style.display === 'none' &&
-            pingSettingsModal.style.display === 'none' &&
-            toggleshiftSettingsModal.style.display === 'none' &&
-            infoModal.style.display === 'none') {
             boxVisible = !boxVisible;
             mainBox.style.display = boxVisible ? 'none' : 'none';
             Cosmetics.style.display = boxVisible ? 'none' : 'none';
             mainMenu.style.display = boxVisible ? 'block' : 'none';
-        }
+            settingsModal.style.display = boxVisible ? 'none' : 'none';
+            crosshairSettingsModal.style.display = boxVisible ? 'none' : 'none';
+            cpsSettingsModal.style.display = boxVisible ? 'none' : 'none';
+            pingSettingsModal.style.display = boxVisible ? 'none' : 'none';
+            toggleshiftSettingsModal.style.display = boxVisible ? 'none' : 'none';
+            infoModal.style.display = boxVisible ? 'none' : 'none';
+            resolutionSettingsModal.style.display = boxVisible ? 'none' : 'none';
+            hotbarSettingsModal.style.display = boxVisible ? 'none' : 'none';
     }
 });
 
@@ -1586,6 +1799,10 @@ customSprintKeyInput.addEventListener('keydown', (e) => {
 });
         document.getElementById('customSprintKey').addEventListener('click', function() {
         this.value = 'PRESS A KEY';
+    });
+
+          document.getElementById('closeResolutionSettings').addEventListener('click', function() {
+        resolutionSettingsModal.style.display = 'none';
     });
         document.getElementById('closeHotbarSettings').addEventListener('click', function() {
         hotbarSettingsModal.style.display = 'none';

@@ -25,6 +25,7 @@
 
 
     function updateGameAppearance() {
+
         document.title = "Deep Space Client";
         const maintext = document.querySelector('.Title.FullyFancyText');
         if (maintext) {
@@ -32,8 +33,9 @@
             maintext.textContent = "DEEP SPACE";
             maintext.style.textShadow = "10px 5px 5px #000000";
             maintext.style.fontSize = '60px';
-            maintext.style.fontWeight = 'bolder';
+            maintext.style.fontWeight = '100';
         }
+
 
         const background = document.querySelector(".HomeBackground");
         if (background) {
@@ -238,14 +240,14 @@ const createhud = (id, zIndex) => {
         menu.style.top = '50%';
         menu.style.left = '50%';
         menu.style.transform = 'translate(-50%, -50%)';
-        menu.style.width = '350px';
-        menu.style.height = '290px';
-        menu.style.backgroundColor = 'rgb(40, 40, 40)';
-        menu.style.border = '2px solid rgb(60, 60, 60)';
+        menu.style.width = '500px';
+        menu.style.height = '250px';
         menu.style.color = 'white';
-        menu.style.borderRadius = '20px';
         menu.style.display = 'none';
+        menu.style.justifyContent = 'space-between';
+        menu.style.flexDirection = 'column';
         menu.style.padding = '20px';
+        menu.style.alignItems = 'center';
         menu.style.zIndex = zIndex;
         mainHud.appendChild(menu);
         return menu;
@@ -278,6 +280,12 @@ const createhud = (id, zIndex) => {
                          const Cosmetics = createBox('Cosmetics', '1002');
     Cosmetics.style.backgroundColor = 'rgb(40, 40, 40)'
 
+                         const EditHud = createBox('EditHud', '1002');
+    EditHud.style.backgroundColor = 'transparent'
+    EditHud.style.justifyContent = 'space-between';
+    EditHud.style.flexDirection = 'column';
+    EditHud.style.alignItems = 'center';
+
                             const resolutionSettingsModal = createBox('resolutionSettingsModal', '1002');
     resolutionSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)'
 
@@ -301,137 +309,156 @@ const createhud = (id, zIndex) => {
     settingsContainer.style.display = 'flex';
     mainBox.appendChild(settingsContainer);
 
+        const DSLogo = document.createElement('div');
+DSLogo.style.backgroundImage = 'url(https://i.postimg.cc/k53nGY3S/Deep-Space-Logo-v02.png)';
+DSLogo.style.backgroundRepeat = "no-repeat";
+DSLogo.style.backgroundSize = "contain";
+DSLogo.style.width = '180px';
+DSLogo.style.height = '150px';
+mainMenu.appendChild(DSLogo);
+
     const MenuText = document.createElement('button');
-    MenuText.textContent = 'DEEP SPACE';
+    MenuText.textContent = 'DEEP SPACE CLIENT';
+    MenuText.style.textShadow = "10px 5px 5px #000000";
+    MenuText.style.fontFamily = "'Bungee', sans-serif";
     MenuText.style.width = '350px';
     MenuText.style.heght = '50px';
     MenuText.style.marginBottom = '10px';
-    MenuText.style.fontSize = '30px';
-    MenuText.style.fontWeight = 'bold';
+    MenuText.style.fontSize = '27px';
+    MenuText.style.fontWeight = '200';
     MenuText.style.color = 'white';
-    MenuText.style.textShadow = "10px 5px 5px #000000";
     MenuText.style.backgroundColor = 'transparent';
     MenuText.style.border = 'none';
     mainMenu.appendChild(MenuText);
 
-    const ModsButton = document.createElement('button');
-    ModsButton.textContent = 'Mods';
-    ModsButton.style.marginBottom = '10px';
-    ModsButton.style.backgroundColor = 'rgba(240, 240, 240, 0.2)';
-    ModsButton.style.borderRadius = '10px';
-    ModsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
-    ModsButton.style.color = 'white';
-    ModsButton.style.width = '350px';
-    ModsButton.style.height = '50px';
-    ModsButton.style.fontSize = '20px';
-    ModsButton.style.fontWeight = 'bold';
-    ModsButton.style.cursor = 'pointer';
+    const menuButtonsCon = document.createElement('div');
+    menuButtonsCon.style.flexDirection = 'row';
+    menuButtonsCon.style.alignItems = 'center';
+    menuButtonsCon.style.display = 'flex';
+    mainMenu.appendChild(menuButtonsCon);
 
-    ModsButton.addEventListener('mouseover', function() {
-        ModsButton.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
-        ModsButton.style.color = 'white';
-        ModsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
-    });
-
-    ModsButton.addEventListener('mouseout', function() {
-        ModsButton.style.backgroundColor = 'rgba(240, 240, 240, 0.2)';
-        ModsButton.style.color = 'white';
-        ModsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
-    });
-
-    ModsButton.addEventListener('click', function() {
-        mainBox.style.display = 'block';
-    });
-    mainMenu.appendChild(ModsButton);
-
-    const CosmeticsButton = document.createElement('button');
-    CosmeticsButton.textContent = 'Cosmetics';
-    CosmeticsButton.style.marginBottom = '10px';
-    CosmeticsButton.style.backgroundColor = 'rgba(240, 240, 240, 0.2)';
-    CosmeticsButton.style.borderRadius = '10px';
-    CosmeticsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
-    CosmeticsButton.style.color = 'white';
-    CosmeticsButton.style.width = '350px';
-    CosmeticsButton.style.height = '50px';
-    CosmeticsButton.style.fontSize = '20px';
-    CosmeticsButton.style.fontWeight = 'bold';
-    CosmeticsButton.style.cursor = 'pointer';
-
-    CosmeticsButton.addEventListener('mouseover', function() {
-        CosmeticsButton.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
-        CosmeticsButton.style.color = 'white';
-        CosmeticsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
-    });
-
-    CosmeticsButton.addEventListener('mouseout', function() {
-        CosmeticsButton.style.backgroundColor = 'rgba(240, 240, 240, 0.2)';
-        CosmeticsButton.style.color = 'white';
-        CosmeticsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
-    });
-
-    CosmeticsButton.addEventListener('click', function() {
-        Cosmetics.style.display = 'block';
-    });
-    mainMenu.appendChild(CosmeticsButton);
-
-    const settingsButton = document.createElement('button');
-    settingsButton.textContent = 'Settings';
+        const settingsButton = document.createElement('button');
     settingsButton.style.fontSize = '20px';
     settingsButton.style.fontWeight = 'bold';
-    settingsButton.style.marginBottom = '10px';
-    settingsButton.style.width = '350px';
-    settingsButton.style.height = '50px';
-    settingsButton.style.backgroundColor = 'rgba(240, 240, 240, 0.2)';
+    settingsButton.style.width = '60px';
+    settingsButton.style.height = '60px';
+    settingsButton.style.backgroundColor = 'rgba(40, 40, 40, 0.97)';
     settingsButton.style.borderRadius = '10px';
-    settingsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
+    settingsButton.style.border = '2px solid rgba(50, 50, 50, 0.97)';
+    settingsButton.style.outline = '2px solid rgb(30,30,30)';
     settingsButton.style.color = 'white';
     settingsButton.style.cursor = 'pointer';
+    settingsButton.style.display = 'flex';
+    settingsButton.style.alignItems = 'center';
+    settingsButton.style.justifyContent = 'center';
+    settingsButton.style.position = 'relative';
+
+        const settingsImage = document.createElement('div');
+settingsImage.style.backgroundImage = 'url(https://i.postimg.cc/MGRs1QCR/settings-icon-1964x2048-8nigtrtt.png)';
+settingsImage.style.backgroundRepeat = "no-repeat";
+settingsImage.style.backgroundSize = "contain";
+settingsImage.style.width = '40px';
+settingsImage.style.height = '40px';
+settingsImage.style.opacity = '0.6';
+settingsImage.style.position = 'absolute';
+settingsImage.style.top = '50%';
+settingsImage.style.left = '50%';
+settingsImage.style.transform = 'translate(-50%, -50%)';
+
+settingsButton.appendChild(settingsImage);
 
     settingsButton.addEventListener('mouseover', function() {
-        settingsButton.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
-        settingsButton.style.color = 'white';
-        settingsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
+    settingsButton.style.outline = '2px solid rgb(255, 255, 255)';
+    settingsImage.style.opacity = '0.9';
     });
 
     settingsButton.addEventListener('mouseout', function() {
-        settingsButton.style.backgroundColor = 'rgba(240, 240, 240, 0.2)';
-        settingsButton.style.color = 'white';
-        settingsButton.style.border = '2px solid rgba(255, 255, 255, 0.5)';
+    settingsButton.style.outline = '2px solid rgb(30, 30, 30)';
+    settingsImage.style.opacity = '0.6';
     });
 
     settingsButton.addEventListener('click', function() {
         settingsModal.style.display = 'block';
     });
 
-    mainMenu.appendChild(settingsButton);
+    menuButtonsCon.appendChild(settingsButton);
 
-    const linkButton2 = document.createElement('button');
-    linkButton2.textContent = 'Join Discord';
-    linkButton2.style.backgroundColor = 'rgba(240, 240, 240, 0.2)';
-    linkButton2.style.borderRadius = '10px';
-    linkButton2.style.border = '2px solid rgba(255, 255, 255, 0.5)';
-    linkButton2.style.color = 'white';
-    linkButton2.style.width = '350px';
-    linkButton2.style.height = '50px';
-    linkButton2.style.fontSize = '20px';
-    linkButton2.style.fontWeight = 'bold';
-    linkButton2.style.cursor = 'pointer';
-linkButton2.addEventListener('mouseover', function() {
-    linkButton2.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
-    linkButton2.style.color = 'white';
-    linkButton2.style.border = '2px solid rgba(255, 255, 255, 0.5)';
+
+    const ModsButton = document.createElement('button');
+    ModsButton.textContent = 'MODS';
+    ModsButton.style.marginBottom = '10px';
+    ModsButton.style.backgroundColor = 'rgba(40, 40, 40, 0.97)';
+    ModsButton.style.borderRadius = '10px';
+    ModsButton.style.outline = '2px solid rgb(30,30,30)';
+    ModsButton.style.border = '2px solid rgba(50, 50, 50, 0.97)';
+    ModsButton.style.color = 'white';
+    ModsButton.style.width = '180px';
+    ModsButton.style.height = '60px';
+    ModsButton.style.margin = '0px 10px 0px 10px';
+    ModsButton.style.fontSize = '20px';
+    ModsButton.style.fontWeight = '300';
+    ModsButton.style.cursor = 'pointer';
+
+    ModsButton.addEventListener('mouseover', function() {
+    ModsButton.style.outline = '2px solid rgb(255, 255, 255)';
+    });
+
+    ModsButton.addEventListener('mouseout', function() {
+    ModsButton.style.outline = '2px solid rgb(30, 30, 30)';
+    });
+
+    ModsButton.addEventListener('click', function() {
+        mainBox.style.display = 'block';
+    });
+    menuButtonsCon.appendChild(ModsButton);
+
+
+    const CosmeticsButton = document.createElement('button');
+    CosmeticsButton.style.backgroundColor = 'rgba(40, 40, 40, 0.97)';
+    CosmeticsButton.style.borderRadius = '10px';
+    CosmeticsButton.style.border = '2px solid rgba(50, 50, 50, 0.97)';
+    CosmeticsButton.style.outline = '2px solid rgb(30,30,30)';
+    CosmeticsButton.style.color = 'white';
+    CosmeticsButton.style.width = '60px';
+    CosmeticsButton.style.height = '60px';
+    CosmeticsButton.style.fontSize = '20px';
+    CosmeticsButton.style.fontWeight = 'bold';
+    CosmeticsButton.style.cursor = 'pointer';
+    CosmeticsButton.style.display = 'flex';
+CosmeticsButton.style.alignItems = 'center';
+CosmeticsButton.style.justifyContent = 'center';
+CosmeticsButton.style.position = 'relative';
+
+    const CosmeticsImage = document.createElement('div');
+CosmeticsImage.style.backgroundImage = 'url(https://i.postimg.cc/t4RkYc5K/yellow-t-shirt-icon-mds.png)';
+CosmeticsImage.style.backgroundRepeat = "no-repeat";
+CosmeticsImage.style.backgroundSize = "contain";
+CosmeticsImage.style.width = '45px';
+CosmeticsImage.style.height = '45px';
+CosmeticsImage.style.opacity = '0.6';
+CosmeticsImage.style.position = 'absolute';
+CosmeticsImage.style.top = '58%';
+CosmeticsImage.style.left = '50%';
+CosmeticsImage.style.transform = 'translate(-50%, -50%)'; // Center the image exactly
+
+CosmeticsButton.appendChild(CosmeticsImage);
+
+CosmeticsButton.addEventListener('mouseover', function() {
+        CosmeticsButton.style.outline = '2px solid rgb(255,255,255)';
+      CosmeticsImage.style.opacity = '0.9';
 });
 
-linkButton2.addEventListener('mouseout', function() {
-    linkButton2.style.backgroundColor = 'rgba(240, 240, 240, 0.2)';
-    linkButton2.style.color = 'white';
-    linkButton2.style.border = '2px solid rgba(255, 255, 255, 0.5)';
+CosmeticsButton.addEventListener('mouseout', function() {
+        CosmeticsButton.style.outline = '2px solid rgb(30,30,30)';
+      CosmeticsImage.style.opacity = '0.6';
 });
 
-linkButton2.addEventListener('click', function() {
-    window.open('https://discord.gg/NdpwX4FBaB', '_blank');
+CosmeticsButton.addEventListener('click', function() {
+        Cosmetics.style.display = 'block';
 });
-    mainMenu.appendChild(linkButton2);
+    menuButtonsCon.appendChild(CosmeticsButton);
+
+
 
         const ALLButton = document.createElement('button');
     ALLButton.textContent = 'All';
@@ -446,7 +473,26 @@ linkButton2.addEventListener('click', function() {
     ALLButton.style.cursor = 'pointer';
     settingsContainer.appendChild(ALLButton);
 
-            const INFOButton = document.createElement('button');
+
+                const EditHUDButton = document.createElement('button');
+    EditHUDButton.textContent = 'Edit Hud';
+    EditHUDButton.style.marginRight = '5px';
+    EditHUDButton.style.backgroundColor = 'rgb(50, 50, 50)';
+    EditHUDButton.style.borderRadius = '5px';
+    EditHUDButton.style.border = 'none';
+    EditHUDButton.style.color = 'white';
+    EditHUDButton.style.width = '100px';
+    EditHUDButton.style.height = '30px';
+    EditHUDButton.style.fontsize = '18px';
+    EditHUDButton.style.cursor = 'pointer';
+    EditHUDButton.addEventListener('click', function() {
+    EditHud.style.display = 'flex';
+    mainBox.style.display = 'none';
+    mainMenu.style.display = 'none';
+    });
+    settingsContainer.appendChild(EditHUDButton);
+
+                const INFOButton = document.createElement('button');
     INFOButton.textContent = 'Info';
     INFOButton.style.marginRight = '5px';
     INFOButton.style.backgroundColor = 'rgb(50, 50, 50)';
@@ -745,48 +791,22 @@ crosshairImage.style.width = '75px';
 crosshairImage.style.height = '75px';
 crosshairBox.appendChild(crosshairImage);
 
-    const crosshairButtonContainer = document.createElement('div');
-    crosshairButtonContainer.style.display = 'flex';
-    crosshairButtonContainer.style.justifyContent = 'space-between';https://i.postimg.cc/B6pm2jqQ/running-man-icon-graphic-4wmjspdbhe5ruv0n-1-as.png
-    crosshairButtonContainer.style.width = '100%';
-
-    const crosshairToggleButton = document.createElement('button');
-    crosshairToggleButton.textContent = 'Enabled';
-    crosshairToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
-    crosshairToggleButton.style.borderRadius = '10px';
-    crosshairToggleButton.style.border = 'none';
-    crosshairToggleButton.style.color = 'white';
-    crosshairToggleButton.style.width = '100px';
-    crosshairToggleButton.style.height = '40px';
-    crosshairToggleButton.style.fontSize = '18px';
-    crosshairToggleButton.style.cursor = 'pointer';
-    crosshairToggleButton.addEventListener('click', function() {
-        if (crosshairToggleButton.textContent === 'Enabled') {
-            crosshairToggleButton.textContent = 'Disabled';
-            CrossOpacity = '0';
-        } else {
-            crosshairToggleButton.textContent = 'Enabled';
-            CrossOpacity = '1';
-        }
-    });
-    crosshairButtonContainer.appendChild(crosshairToggleButton);
 
     const crosshairSettingsButton = document.createElement('button');
-    crosshairSettingsButton.innerHTML = '⚙';
+    crosshairSettingsButton.textContent = 'Customize'
     crosshairSettingsButton.style.backgroundColor = 'rgb(40, 40, 40)';
     crosshairSettingsButton.style.borderRadius = '10px';
     crosshairSettingsButton.style.border = 'none';
     crosshairSettingsButton.style.color = 'white';
-    crosshairSettingsButton.style.fontSize = '24px';
-    crosshairSettingsButton.style.width = '40px';
+    crosshairSettingsButton.style.fontSize = '18px';
+    crosshairSettingsButton.style.width = '160px';
     crosshairSettingsButton.style.height = '40px';
     crosshairSettingsButton.style.cursor = 'pointer';
     crosshairSettingsButton.addEventListener('click', function() {
         crosshairSettingsModal.style.display = 'block';
     });
-    crosshairButtonContainer.appendChild(crosshairSettingsButton);
+    crosshairBox.appendChild(crosshairSettingsButton);
 
-    crosshairBox.appendChild(crosshairButtonContainer);
     row1.appendChild(crosshairBox);
 
         const cpsBox = document.createElement('div');
@@ -849,7 +869,7 @@ let OffsetCX = 0;
 let OffsetCY = 0;
 
 cpsCounter.addEventListener('mousedown', (e) => {
-    if (cpsToggleButton.textContent === 'Enabled'&& mainMenu.style.display === 'block' && e.target.nodeName !== 'INPUT') {
+    if (cpsToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && e.target.nodeName !== 'INPUT') {
         isMoving = true;
         OffsetCX = e.clientX;
         OffsetCY = e.clientY;
@@ -972,7 +992,7 @@ let OffsetPX = 0;
 let OffsetPY = 0;
 
 pingCounter.addEventListener('mousedown', (e) => {
-    if (pingToggleButton.textContent === 'Enabled'&& mainMenu.style.display === 'block' && e.target.nodeName !== 'INPUT') {
+    if (pingToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && e.target.nodeName !== 'INPUT') {
         isMoving = true;
         OffsetPX = e.clientX;
         OffsetPY = e.clientY;
@@ -1276,7 +1296,7 @@ let offsetX = 0;
 let offsetY = 0;
 
 container.addEventListener('mousedown', (event) => {
-    if (keystrokeToggleButton.textContent === 'Enabled'&& mainMenu.style.display === 'block' && event.target.nodeName !== 'INPUT') {
+    if (keystrokeToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && event.target.nodeName !== 'INPUT') {
         isMoving = true;
         offsetX = event.clientX;
         offsetY = event.clientY;
@@ -1397,46 +1417,22 @@ hotbarImage.style.width = '75px';
 hotbarImage.style.height = '75px';
 hotbarBox.appendChild(hotbarImage);
 
-    const hotbarButtonContainer = document.createElement('div');
-    hotbarButtonContainer.style.display = 'flex';
-    hotbarButtonContainer.style.justifyContent = 'space-between';
-    hotbarButtonContainer.style.width = '100%';
-
-    const hotbarToggleButton = document.createElement('button');
-    hotbarToggleButton.textContent = 'Enabled';
-    hotbarToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
-    hotbarToggleButton.style.borderRadius = '10px';
-    hotbarToggleButton.style.border = 'none';
-    hotbarToggleButton.style.color = 'white';
-    hotbarToggleButton.style.width = '100px';
-    hotbarToggleButton.style.height = '40px';
-    hotbarToggleButton.style.fontSize = '18px';
-    hotbarToggleButton.style.cursor = 'pointer';
-    hotbarToggleButton.addEventListener('click', function() {
-        if (hotbarToggleButton.textContent === 'Enabled') {
-            hotbarToggleButton.textContent = 'Disabled';
-        } else {
-            hotbarToggleButton.textContent = 'Enabled';
-        }
-    });
-    hotbarButtonContainer.appendChild(hotbarToggleButton);
 
     const hotbarSettingsButton = document.createElement('button');
-    hotbarSettingsButton.innerHTML = '⚙';
+    hotbarSettingsButton.textContent = 'Customize';
     hotbarSettingsButton.style.backgroundColor = 'rgb(40, 40, 40)';
     hotbarSettingsButton.style.borderRadius = '10px';
     hotbarSettingsButton.style.border = 'none';
     hotbarSettingsButton.style.color = 'white';
-    hotbarSettingsButton.style.fontSize = '24px';
-    hotbarSettingsButton.style.width = '40px';
+    hotbarSettingsButton.style.fontSize = '18px';
+    hotbarSettingsButton.style.width = '160px';
     hotbarSettingsButton.style.height = '40px';
     hotbarSettingsButton.style.cursor = 'pointer';
     hotbarSettingsButton.addEventListener('click', function() {
         hotbarSettingsModal.style.display = 'block';
     });
-    hotbarButtonContainer.appendChild(hotbarSettingsButton);
+    hotbarBox.appendChild(hotbarSettingsButton);
 
-    hotbarBox.appendChild(hotbarButtonContainer);
     row3.appendChild(hotbarBox);
 
        const resolutionBox = document.createElement('div');
@@ -1491,6 +1487,7 @@ resolutionBox.appendChild(resolutionImage);
             resolutionToggleButton.textContent = 'Disabled';
         } else {
             resolutionToggleButton.textContent = 'Enabled';
+
         }
     });
     resolutionButtonContainer.appendChild(resolutionToggleButton);
@@ -1520,6 +1517,15 @@ resolutionBox.appendChild(resolutionImage);
             <input type="range" id="zoomSlider" min="1" max="5" step="0.1" value="1.0" style="width: 20%;">
         <label id="zoomValueLabel">Zoom: 1.0x</label>
     `;
+    EditHud.innerHTML = `
+    <label style="font-size :30px; font-weight:bolder;">✎EDIT THE HUD✎</label>
+    <button id="CommitChanges" style=" background: rgba(40, 40, 40, 0.97) ; width:300px; height :60px; border: 2px solid rgba(50, 50, 50, 0.97); outline :2px solid rgb(30,30,30); border-radius :10px; color: white; cursor: pointer; font-size :15px; font-weight:bolder;">COMMIT CHANGES</button>
+    `;
+
+    Cosmetics.innerHTML = `
+            <label>COSMETICS</label>
+    <button id="closeCosmetics" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+    `;
 
 hotbarSettingsModal.innerHTML = `
     <label>HOTBAR</label>
@@ -1542,7 +1548,6 @@ hotbarSettingsModal.innerHTML = `
         <input type="color" id="colorPicker4" name="colorPicker4" value="#ffffff">
     </div>
 `;
-
 
 
 
@@ -1576,10 +1581,25 @@ hotbarSettingsModal.innerHTML = `
     settingsModal.innerHTML = `
          <label">SETTINGS</label>
         <button id="closeSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+        <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
-<label style="margin-bottom: 10px;">TOGGLE KEY</label>
+<label style="margin-bottom: 10px; font-weight: 700;">TOGGLE KEY</label>
         <label for="customKey" style="margin-bottom: 5px;">Press a key to set  toggle key:</label>
         <input type="text" id="customKey" style="width: 75px; text-align: center; margin-bottom: 10px;" readonly>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
+        <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >DEEP SPACE CONTROLS</label>
+        <label>Client Menu : Right Shift</label>
+        <label>Toggle Sprint : F</label>
+        <label>Cinematic Mode : H</label>
+        </div>
+        </div>
+         <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
+        <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >CURRENT VERSION</label>
+        <label>Version : 1.0 </label>
+        <button id="UpdateButton" style="margin-top: 80px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Update</button>
+        </div>
         </div>
     `;
 ;
@@ -1666,6 +1686,10 @@ document.getElementById('option3Button').addEventListener('click', function() {
                 document.getElementById('option8Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/454e954a-4b50-11ef-b82b-ff664d9019c5.gif';
 })
+                    document.getElementById('UpdateButton').addEventListener('click', function() {
+     window.open('https://georgecr0.github.io/DeepSpaceClient/index.html', '_blank');
+})
+
 
 document.getElementById('crosshairSizeSlider').addEventListener('input', function() {
         CrossSize = parseInt(this.value);
@@ -1714,7 +1738,7 @@ function adjustZoom(zoomLevel) {
     document.body.style.zoom = zoomLevel;
 
     // Select elements that should remain unaffected by zoom
-    const elementsToNeutralize = document.querySelectorAll('.WholeAppWrapper, .ForceRotateBackground , #toggleHud');
+    const elementsToNeutralize = document.querySelectorAll('.WholeAppWrapper , #toggleHud');
 
     elementsToNeutralize.forEach(function(element) {
         // Remove previous transform and positioning
@@ -1767,7 +1791,7 @@ document.addEventListener('keydown', function(event) {
             boxVisible = !boxVisible;
             mainBox.style.display = boxVisible ? 'none' : 'none';
             Cosmetics.style.display = boxVisible ? 'none' : 'none';
-            mainMenu.style.display = boxVisible ? 'block' : 'none';
+            mainMenu.style.display = boxVisible ? 'flex' : 'none';
             settingsModal.style.display = boxVisible ? 'none' : 'none';
             crosshairSettingsModal.style.display = boxVisible ? 'none' : 'none';
             cpsSettingsModal.style.display = boxVisible ? 'none' : 'none';
@@ -1800,7 +1824,15 @@ customSprintKeyInput.addEventListener('keydown', (e) => {
         document.getElementById('customSprintKey').addEventListener('click', function() {
         this.value = 'PRESS A KEY';
     });
+              document.getElementById('CommitChanges').addEventListener('click', function() {
+        EditHud.style.display = 'none';
+        mainMenu.style.display = 'flex';
+        mainBox.style.display = 'block';
+    });
 
+          document.getElementById('closeCosmetics').addEventListener('click', function() {
+        Cosmetics.style.display = 'none';
+    });
           document.getElementById('closeResolutionSettings').addEventListener('click', function() {
         resolutionSettingsModal.style.display = 'none';
     });

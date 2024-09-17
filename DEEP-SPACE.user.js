@@ -631,6 +631,7 @@ toggleshiftButtonContainer.appendChild(toggleshiftSettingsButton);
 toggleshiftBox.appendChild(toggleshiftButtonContainer);
 row1.appendChild(toggleshiftBox);
 
+let togglesprintKey = 'KeyF';
 let isRunning = '';
 let isKeepingRunning = false;
 
@@ -653,7 +654,7 @@ const shiftUp = new KeyboardEvent('keyup', shiftKeyData);
 
 document.addEventListener('keyup', e => {
     if (toggleshiftToggleButton.textContent === 'Enabled') {
-        if (e.code === 'KeyY') {
+        if (e.code === togglesprintKey) {
             if (isRunning === '') {
                 isRunning = 'Shift';
                 isKeepingRunning = true;
@@ -1294,6 +1295,11 @@ document.addEventListener('mouseup', ({ button }) => {
 
     row3.appendChild(hotbarBox);
 
+    Cosmetics.innerHTML = `
+            <label>COSMETICS</label>
+    <button id="closeCosmetics" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+    `;
+
 hotbarSettingsModal.innerHTML = `
     <label>HOTBAR</label>
     <button id="closeHotbarSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
@@ -1312,9 +1318,14 @@ hotbarSettingsModal.innerHTML = `
     <label style="font-size :30px; font-weight:bolder;">✎EDIT THE HUD✎</label>
     <button id="CommitChanges" style=" background: rgba(40, 40, 40, 0.97) ; width:300px; height :60px; border: 2px solid rgba(50, 50, 50, 0.97); outline :2px solid rgb(30,30,30); border-radius :10px; color: white; cursor: pointer; font-size :15px; font-weight:bolder;">COMMIT CHANGES</button>
     `;
+
              toggleshiftSettingsModal.innerHTML = `
-        <label>TOGGLE SPRINT</label>
-        <button id="closetoggleshiftSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+    <label>TOGGLE SPRINT</label>
+    <button id="closetoggleshiftSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+    <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
+    <label style="margin-bottom: 5px;">Press a key to set  toggle key:</label>
+        <input type="text" id="customSprintKey" style="width: 75px; text-align: center; margin-bottom: 10px;" readonly>
+    </div>
         `;
 
         pingSettingsModal.innerHTML = `
@@ -1328,14 +1339,27 @@ hotbarSettingsModal.innerHTML = `
     `;
 
     settingsModal.innerHTML = `
-         <label style="font-size: 20px;">SETTINGS</label>
+         <label">SETTINGS</label>
         <button id="closeSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
-        <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
-<label style="margin-bottom: 10px;">TOGGLE KEY</label>
+        <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
+<label style="margin-bottom: 10px; font-weight: 700;">TOGGLE KEY</label>
         <label for="customKey" style="margin-bottom: 5px;">Press a key to set  toggle key:</label>
         <input type="text" id="customKey" style="width: 75px; text-align: center; margin-bottom: 10px;" readonly>
-        <label style="margin-bottom: 5px; font-size: 13px; margin-top: 25px;">Available keys: X, F, H, J, K, L, R, Y, U, M</label>
-        <label style="font-size: 12px; text-align: center; color: #D3494E;">NOTE: You can put whatever key you want, but these keys do nothing else</label>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
+        <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >DEEP SPACE CONTROLS</label>
+        <label>Client Menu : Right Shift</label>
+        <label>Toggle Sprint : F</label>
+        <label>Cinematic Mode : H</label>
+        </div>
+        </div>
+         <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
+        <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >CURRENT VERSION</label>
+        <label>Version : 1.0 </label>
+        <button id="UpdateButton" style="margin-top: 80px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Update</button>
+        </div>
         </div>
     `;
 ;
@@ -1424,6 +1448,9 @@ document.getElementById('colorPicker2').addEventListener('input', function() {
     });
 });
 
+                    document.getElementById('UpdateButton').addEventListener('click', function() {
+     window.open('https://georgecr0.github.io/DeepSpaceClient/index.html', '_blank');
+})
 
 let toggleKey = 'ShiftRight';
 let boxVisible = false;
@@ -1454,6 +1481,16 @@ document.addEventListener('keydown', function(event) {
         mainBox.style.display = 'block';
     });
 
+    const customSprintKeyInput = document.getElementById('customSprintKey');
+customSprintKeyInput.addEventListener('keydown', (e) => {
+    e.preventDefault();
+    togglesprintKey = e.code;
+    customSprintKeyInput.value = e.key.toUpperCase();
+});
+        document.getElementById('customSprintKey').addEventListener('click', function() {
+        this.value = 'PRESS A KEY';
+    });
+
 settingsButton.addEventListener('click', function() {
     settingsModal.style.display = 'block';
 });
@@ -1462,6 +1499,9 @@ settingsButton.addEventListener('click', function() {
     mainBox.style.display = 'none';
 });
 
+    document.getElementById('closeCosmetics').addEventListener('click', function() {
+        Cosmetics.style.display = 'none';
+    });
 
     document.getElementById('customKey').addEventListener('click', function() {
         isSettingKey = true;

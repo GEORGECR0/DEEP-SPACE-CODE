@@ -34,7 +34,7 @@
         }
 
     const modifyElements = () => {
-        ['LogoContainer', 'cube' , 'HomeScreenBottomRight'].forEach(className => {
+        ['LogoContainer', 'cube' , 'HomeScreenBottomLeft'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(el => el.remove());
         });
 
@@ -45,15 +45,22 @@
             });
         });
 
-                ['AccountPreviewBackground', 'HeaderRightBackground'].forEach(className => {
+                ['HeaderRightBackground'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(el => {
-                el.style.backgroundColor = "#883240";
+                el.style.backgroundColor = "rgb(136, 50, 64)";
             });
         });
-                        ['PlayerNameInfoNameClickable'].forEach(className => {
+                        ['PlayerNamePreview'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(el => {
+                el.style.backgroundColor = "rgba(136, 50, 64 ,0.45)";
                 el.style.color = "white";
                 el.style.textShadow = "none";
+            });
+        });
+               ['SocialBarInner'].forEach(className => {
+            document.querySelectorAll('.' + className).forEach(el => {
+                el.style.backgroundColor = "rgba(0,0,0,1)";
+                el.style.opacity = '1';
             });
         });
 
@@ -1370,29 +1377,29 @@ crosshairSettingsModal.innerHTML = `
     <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
         <img src="https://piskel-imgstore-b.appspot.com/img/d81e6523-1d08-11ef-8eba-878efb6f53d1.gif" style="width: 115px; height: 115px;">
-        <button id="option3Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">CROSSHAIR 1</button>
+        <button id="option3Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
     <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
         <img src="https://piskel-imgstore-b.appspot.com/img/b9689d23-1d09-11ef-97f1-878efb6f53d1.gif" style="width: 115px; height: 115px;">
-        <button id="option5Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">CROSSHAIR 2</button>
+        <button id="option5Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
     <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
         <img src="https://piskel-imgstore-b.appspot.com/img/354b6bd7-1cd8-11ef-8822-bbb60d940ece.gif" style="width: 115px; height: 115px;">
-        <button id="option1Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">CROSSHAIR 3</button>
+        <button id="option1Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
     <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
         <img src="https://piskel-imgstore-b.appspot.com/img/18315826-1cd8-11ef-a2e5-bbb60d940ece.gif" style="width: 115px; height: 115px;">
-        <button id="option2Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">CROSSHAIR 4</button>
+        <button id="option2Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
 </div>
 <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 15px;">
   <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
         <img src="https://piskel-imgstore-b.appspot.com/img/4712921e-1d01-11ef-b4ea-878efb6f53d1.gif" style="width: 115px; height: 115px;">
-        <button id="option4Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">CROSSHAIR 5</button>
+        <button id="option4Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
       <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
          <label>CROSSHAIR SETTINGS</label>
@@ -1403,9 +1410,16 @@ crosshairSettingsModal.innerHTML = `
       <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
         <img src="https://piskel-imgstore-b.appspot.com/img/4ba6dc68-218c-11ef-b537-77cfad41cb01.gif" style="width: 115px; height: 115px;">
-        <button id="option6Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">CROSSHAIR 6</button>
+        <button id="option6Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
  </div>
+ <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 15px;">
+       <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
+        <label>CROSSHAIR 7</label>
+        <img src="https://piskel-imgstore-b.appspot.com/img/d46740e1-4a92-11ef-9ed7-5b4c5fd8c3dd.gif" style="width: 115px; height: 115px;">
+        <button id="option7Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
+    </div>
+    </div>
 `;
 
 
@@ -1428,6 +1442,10 @@ document.getElementById('option3Button').addEventListener('click', function() {
         document.getElementById('option6Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/4ba6dc68-218c-11ef-b537-77cfad41cb01.gif';
 })
+                document.getElementById('option7Button').addEventListener('click', function() {
+    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3ed96675-4a93-11ef-9811-5b4c5fd8c3dd.gif';
+})
+
 
 document.getElementById('crosshairSizeSlider').addEventListener('input', function() {
         CrossSize = parseInt(this.value);
@@ -1507,7 +1525,9 @@ settingsButton.addEventListener('click', function() {
         isSettingKey = true;
         this.value = 'PRESS A KEY';
     });
-
+        document.getElementById('closeHotbarSettings').addEventListener('click', function() {
+        hotbarSettingsModal.style.display = 'none';
+    });
     document.getElementById('closeSettings').addEventListener('click', function() {
         settingsModal.style.display = 'none';
     });

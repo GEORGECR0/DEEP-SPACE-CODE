@@ -524,6 +524,7 @@ function createSelectedItemBox() {
 
     mainHud.appendChild(selectedItemBox);
 
+
     function updateSelectedItems() {
         const indices = [46, 47, 48, 49, 50];
         const selectedItemBox = document.getElementById('selected-item-box');
@@ -575,6 +576,7 @@ armourViewToggleButton.addEventListener('click', function() {
 if (armourViewToggleButton.textContent === 'Enabled') {
     createSelectedItemBox();
 }
+
 
 const toggleshiftBox = document.createElement('div');
 toggleshiftBox.style.width = '170px';
@@ -1117,7 +1119,7 @@ keystrokeBox.appendChild(keystrokeText);
 
 // Create keystrokeToggleButton
 const keystrokeToggleButton = document.createElement('button');
-keystrokeToggleButton.textContent = 'Enabled';
+keystrokeToggleButton.textContent = 'Disabled'; // Set default state to 'Disabled'
 keystrokeToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
 keystrokeToggleButton.style.borderRadius = '10px';
 keystrokeToggleButton.style.border = 'none';
@@ -1126,18 +1128,23 @@ keystrokeToggleButton.style.width = '160px';
 keystrokeToggleButton.style.height = '40px';
 keystrokeToggleButton.style.fontSize = '18px';
 keystrokeToggleButton.style.cursor = 'pointer';
+
+// Handle toggle button click event
 keystrokeToggleButton.addEventListener('click', function() {
     if (keystrokeToggleButton.textContent === 'Enabled') {
         keystrokeToggleButton.textContent = 'Disabled';
-        resetKeyStyles(); // Reset key styles on disable
-        setKeysVisibility(false); // Hide keys
+        resetKeyStyles();
+        setKeysVisibility(false); // Hide keys when disabled
     } else {
         keystrokeToggleButton.textContent = 'Enabled';
-        setKeysVisibility(true); // Show keys
+        setKeysVisibility(true);  // Show keys when enabled
     }
 });
+
+// Append button to the DOM
 keystrokeBox.appendChild(keystrokeToggleButton);
 row2.appendChild(keystrokeBox);
+
 // Keys configuration
 const keys = [
     { key: 'W', top: '5px', left: '50%' },
@@ -1164,14 +1171,13 @@ Object.assign(container.style, {
 });
 mainHud.appendChild(container);
 
-
 // Dragging functionality
 let isMoving = false;
 let offsetX = 0;
 let offsetY = 0;
 
 container.addEventListener('mousedown', (event) => {
-    if (keystrokeToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && event.target.nodeName !== 'INPUT') {
+    if (keystrokeToggleButton.textContent === 'Enabled' && EditHud.style.display === 'flex' && event.target.nodeName !== 'INPUT') {
         isMoving = true;
         offsetX = event.clientX;
         offsetY = event.clientY;
@@ -1210,6 +1216,7 @@ const createKeyElement = ({ key, top, left, width = '50px', height = '50px', fon
     return element;
 };
 
+// Initialize key elements
 const keyElements = keys.reduce((acc, keyConfig) => {
     acc[keyConfig.key] = createKeyElement(keyConfig);
     return acc;
@@ -1237,6 +1244,11 @@ const setKeysVisibility = (visible) => {
         element.style.display = visible ? 'block' : 'none';
     });
 };
+
+// Initial visibility check
+if (keystrokeToggleButton.textContent === 'Disabled') {
+    setKeysVisibility(false);  // Hide keys initially if Disabled
+}
 
 // Event listeners with toggle check
 document.addEventListener('keydown', ({ key }) => {
@@ -1268,6 +1280,7 @@ document.addEventListener('mouseup', ({ button }) => {
         if (button === 2) updateKeyStyle('RMB', false);
     }
 });
+
 
             const hotbarBox = document.createElement('div');
     hotbarBox.style.width = '170px';

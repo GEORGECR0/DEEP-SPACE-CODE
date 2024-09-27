@@ -5,6 +5,7 @@
 // @description  Deep Space Client for bloxd.io
 // @author       GEORGECR
 // @match        https://bloxd.io/
+// @match        https://bloxd.io/?utm_source=pwa
 // @icon         https://i.postimg.cc/NMG91FWH/space-BG-loco.jpg
 // @license      MIT
 // @grant        none
@@ -45,9 +46,9 @@
             });
         });
 
-                ['HeaderRightBackground'].forEach(className => {
+                ['HeaderRight'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(el => {
-                el.style.backgroundColor = "rgb(136, 50, 64)";
+                el.style.backgroundColor = "rgba(136, 50, 64,0.45)";
             });
         });
                         ['PlayerNamePreview'].forEach(className => {
@@ -64,10 +65,11 @@
             });
         });
 
-        document.querySelectorAll('.ChooseGameWrapper').forEach(el => {
+        document.querySelectorAll('.CenteredDivUpper').forEach(el => {
             el.style.position = 'absolute';
-            el.style.top = '30%';
-            el.style.transform = 'translateY(-30%)';
+        el.style.top = '30%';
+        el.style.left = '55%';
+        el.style.transform = 'translate(-55%, -30%)';
             el.style.width = '80%';
             el.style.height = '40%';
         });

@@ -12,12 +12,13 @@
 // ==/UserScript==
 
 (function() {
-    //copyright Deep Space Client pls dont copy if you gonna copy some parts reach me on discord
+    //copyright Deep Space Client
     'use strict';
     let crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/d81e6523-1d08-11ef-8eba-878efb6f53d1.gif';
     let CrossSize = '19';
     let colorPicker1Value = '#000000';
     let colorPicker2Value = '#FFFFFF';
+
 
 
     function updateGameAppearance() {
@@ -65,14 +66,7 @@
             });
         });
 
-        document.querySelectorAll('.CenteredDivUpper').forEach(el => {
-            el.style.position = 'absolute';
-        el.style.top = '30%';
-        el.style.left = '55%';
-        el.style.transform = 'translate(-55%, -30%)';
-            el.style.width = '80%';
-            el.style.height = '40%';
-        });
+
 
     };
 
@@ -153,22 +147,18 @@ const createhud = (id, zIndex) => {
     hud.style.display = 'block';
     hud.style.zIndex = zIndex;
 
-    // Make the HUD itself click-through
     hud.style.pointerEvents = 'none';
 
-    // Ensure child elements are interactive
     hud.addEventListener('mouseover', (event) => {
         if (event.target !== hud) {
-            // Re-enable pointer events on child elements
             event.target.style.pointerEvents = 'auto';
         }
     });
 
-    // Handle dynamic child elements by ensuring pointer-events is set to auto
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             mutation.addedNodes.forEach((node) => {
-                if (node.nodeType === 1) { // Ensure it's an element
+                if (node.nodeType === 1) {
                     node.style.pointerEvents = 'auto';
                 }
             });
@@ -526,6 +516,27 @@ function createSelectedItemBox() {
 
     mainHud.appendChild(selectedItemBox);
 
+    let isMoving = false;
+let OffsetAX = 0;
+let OffsetAY = 0;
+
+selectedItemBox.addEventListener('mousedown', (e) => {
+    if (armourViewToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && e.target.nodeName !== 'INPUT') {
+        isMoving = true;
+        OffsetAX = e.clientX;
+        OffsetAY = e.clientY;
+    }
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (armourViewToggleButton.textContent === 'Enabled' && isMoving) {
+        selectedItemBox.style.left = `${e.clientX}px`;
+        selectedItemBox.style.top = `${e.clientY}px`;
+    }
+});
+
+document.addEventListener('mouseup', () => isMoving = false);
+
 
     function updateSelectedItems() {
         const indices = [46, 47, 48, 49, 50];
@@ -614,10 +625,9 @@ toggleshiftToggleButton.style.cursor = 'pointer';
 toggleshiftToggleButton.addEventListener('click', function() {
     if (toggleshiftToggleButton.textContent === 'Enabled') {
         toggleshiftToggleButton.textContent = 'Disabled';
-        // Reset state when toggled to Disabled
         isRunning = '';
         isKeepingRunning = false;
-        document.dispatchEvent(shiftUp); // Ensure shiftUp event is dispatched
+        document.dispatchEvent(shiftUp);
     } else {
         toggleshiftToggleButton.textContent = 'Enabled';
     }
@@ -955,7 +965,6 @@ pingToggleButton.addEventListener('click', function() {
     pingBox.appendChild(pingButtonContainer);
     row2.appendChild(pingBox);
 
-// Create the main container
 const HandItemBox = document.createElement('div');
 HandItemBox.style.width = '170px';
 HandItemBox.style.height = '170px';
@@ -986,7 +995,6 @@ HandItemBox.appendChild(HandItemToggleButton);
 row1.appendChild(HandItemBox);
 
 
-// Function to create the hand item box
 function createHandItemBox() {
     const HandItemBox = document.createElement('div');
     HandItemBox.id = 'hand-item-box';
@@ -1002,9 +1010,29 @@ function createHandItemBox() {
     HandItemBox.style.justifyContent = 'center';
 
     mainHud.appendChild(HandItemBox);
+
+        let isMoving = false;
+let OffsetHX = 0;
+let OffsetHY = 0;
+
+HandItemBox.addEventListener('mousedown', (e) => {
+    if (HandItemToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && e.target.nodeName !== 'INPUT') {
+        isMoving = true;
+        OffsetHX = e.clientX;
+        OffsetHY = e.clientY;
+    }
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (HandItemToggleButton.textContent === 'Enabled' && isMoving) {
+        HandItemBox.style.left = `${e.clientX}px`;
+        HandItemBox.style.top = `${e.clientY}px`;
+    }
+});
+
+document.addEventListener('mouseup', () => isMoving = false);
 }
 
-// Function to update the selected items in the box
 function updateHandItems() {
     const HandItemBox = document.getElementById('hand-item-box');
     if (HandItemBox) {
@@ -1029,10 +1057,8 @@ function updateHandItems() {
     }
 }
 
-// Variable to track the toggle state
 let isHandItemBoxEnabled = false;
 
-// Event listener to toggle the hand item box
 HandItemToggleButton.addEventListener('click', function() {
     isHandItemBoxEnabled = !isHandItemBoxEnabled;
     if (isHandItemBoxEnabled) {
@@ -1048,7 +1074,6 @@ HandItemToggleButton.addEventListener('click', function() {
     }
 });
 
-// Initial state: create the hand item box if enabled
 if (isHandItemBoxEnabled) {
     createHandItemBox();
     setInterval(updateHandItems, 1000);
@@ -1066,7 +1091,6 @@ cinematicBox.style.alignItems = 'center';
 cinematicBox.style.padding = '10px';
 cinematicBox.style.borderRadius = '10px';
 
-// Create and append the cinematic text
 const cinematicText = document.createElement('span');
 cinematicText.textContent = 'CINEMATIC MODE';
 cinematicBox.appendChild(cinematicText);
@@ -1114,12 +1138,10 @@ keystrokeBox.style.alignItems = 'center';
 keystrokeBox.style.padding = '10px';
 keystrokeBox.style.borderRadius = '10px';
 
-// Create keystrokeText
 const keystrokeText = document.createElement('span');
 keystrokeText.textContent = 'KEYSTROKES';
 keystrokeBox.appendChild(keystrokeText);
 
-// Create keystrokeToggleButton
 const keystrokeToggleButton = document.createElement('button');
 keystrokeToggleButton.textContent = 'Disabled'; // Set default state to 'Disabled'
 keystrokeToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
@@ -1131,23 +1153,20 @@ keystrokeToggleButton.style.height = '40px';
 keystrokeToggleButton.style.fontSize = '18px';
 keystrokeToggleButton.style.cursor = 'pointer';
 
-// Handle toggle button click event
 keystrokeToggleButton.addEventListener('click', function() {
     if (keystrokeToggleButton.textContent === 'Enabled') {
         keystrokeToggleButton.textContent = 'Disabled';
         resetKeyStyles();
-        setKeysVisibility(false); // Hide keys when disabled
+        setKeysVisibility(false);
     } else {
         keystrokeToggleButton.textContent = 'Enabled';
-        setKeysVisibility(true);  // Show keys when enabled
+        setKeysVisibility(true);
     }
 });
 
-// Append button to the DOM
 keystrokeBox.appendChild(keystrokeToggleButton);
 row2.appendChild(keystrokeBox);
 
-// Keys configuration
 const keys = [
     { key: 'W', top: '5px', left: '50%' },
     { key: 'A', top: '60px', left: '31.5%' },
@@ -1158,7 +1177,6 @@ const keys = [
     { key: '―――', top: '170px', left: '50%', height: '25px', width: '160px', fontSize: '18px' }
 ];
 
-// Create container
 const container = document.createElement("div");
 Object.assign(container.style, {
     zIndex: "10000",
@@ -1173,7 +1191,6 @@ Object.assign(container.style, {
 });
 mainHud.appendChild(container);
 
-// Dragging functionality
 let isMoving = false;
 let offsetX = 0;
 let offsetY = 0;
@@ -1195,7 +1212,6 @@ document.addEventListener('mousemove', (event) => {
 
 document.addEventListener('mouseup', () => isMoving = false);
 
-// Create key elements
 const createKeyElement = ({ key, top, left, width = '50px', height = '50px', fontSize = '24px' }) => {
     const element = document.createElement('div');
     Object.assign(element.style, {
@@ -1218,13 +1234,11 @@ const createKeyElement = ({ key, top, left, width = '50px', height = '50px', fon
     return element;
 };
 
-// Initialize key elements
 const keyElements = keys.reduce((acc, keyConfig) => {
     acc[keyConfig.key] = createKeyElement(keyConfig);
     return acc;
 }, {});
 
-// Update key style
 const updateKeyStyle = (key, active) => {
     if (keystrokeToggleButton.textContent === 'Enabled') {
         keyElements[key].style.backgroundColor = active ? "rgba(255, 255, 255, 0.6)" : "rgba(0, 0, 0, 0.6)";
@@ -1232,7 +1246,6 @@ const updateKeyStyle = (key, active) => {
     }
 };
 
-// Reset all key styles
 const resetKeyStyles = () => {
     Object.keys(keyElements).forEach(key => {
         keyElements[key].style.backgroundColor = "rgba(0, 0, 0, 0.6)";
@@ -1240,19 +1253,16 @@ const resetKeyStyles = () => {
     });
 };
 
-// Set keys visibility
 const setKeysVisibility = (visible) => {
     Object.values(keyElements).forEach(element => {
         element.style.display = visible ? 'block' : 'none';
     });
 };
 
-// Initial visibility check
 if (keystrokeToggleButton.textContent === 'Disabled') {
-    setKeysVisibility(false);  // Hide keys initially if Disabled
+    setKeysVisibility(false);
 }
 
-// Event listeners with toggle check
 document.addEventListener('keydown', ({ key }) => {
     if (keystrokeToggleButton.textContent === 'Enabled') {
         const upperKey = key.toUpperCase();

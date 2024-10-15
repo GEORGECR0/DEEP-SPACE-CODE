@@ -41,31 +41,43 @@
         });
 
         ['GameAdsBanner', 'HomeBannerInner'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateX(100%)';
+            document.querySelectorAll('.' + className).forEach(ads => {
+                ads.style.opacity = '0';
+                ads.style.transform = 'translateX(100%)';
             });
         });
 
                 ['HeaderRight'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(el => {
-                el.style.backgroundColor = "rgba(136, 50, 64,0.45)";
+            document.querySelectorAll('.' + className).forEach(optionsTR => {
+                optionsTR.style.backgroundColor = "rgba(136, 50, 64,0.45)";
             });
         });
                         ['PlayerNamePreview'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(el => {
-                el.style.backgroundColor = "rgba(136, 50, 64 ,0.45)";
-                el.style.color = "white";
-                el.style.textShadow = "none";
+            document.querySelectorAll('.' + className).forEach(optionsTL => {
+                optionsTL.style.backgroundColor = "rgba(136, 50, 64 ,0.45)";
+                optionsTL.style.color = "white";
+                optionsTL.style.textShadow = "none";
             });
         });
                ['SocialBarInner'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(el => {
-                el.style.backgroundColor = "rgba(0,0,0,1)";
-                el.style.opacity = '1';
+            document.querySelectorAll('.' + className).forEach(socialbox => {
+                socialbox.style.backgroundColor = "rgba(0,0,0,1)";
+                socialbox.style.opacity = '1';
             });
         });
-
+        ['GameCardContainer', 'GameCardContainer LongRatio'].forEach(className => {
+            document.querySelectorAll('.' + className).forEach(GameCards => {
+                GameCards.style.width = "220px";
+                GameCards.style.height = "155px";
+            });
+        });
+        document.querySelectorAll('.ChooseGameWrapper').forEach(GameCards1 => {
+            GameCards1.style.position = 'absolute';
+            GameCards1.style.top = '30%';
+            GameCards1.style.transform = 'translateY(-30%)';
+            GameCards1.style.width = '85%';
+            GameCards1.style.height = '35%';
+        });
 
 
     };
@@ -125,6 +137,7 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
 
         document.querySelectorAll('.AvailableGame').forEach(item => {
             item.style.border = "none";
+            item.style.borderRadius = "0px";
             item.style.boxShadow = "0px 10px 20px rgba(0, 0, 0, 0.4)";
         });
 
@@ -628,7 +641,7 @@ toggleshiftToggleButton.addEventListener('click', function() {
         isRunning = '';
         isKeepingRunning = false;
         document.dispatchEvent(shiftUp);
-    } else {
+    } else {//9956074932
         toggleshiftToggleButton.textContent = 'Enabled';
     }
 });

@@ -47,6 +47,14 @@
             });
         });
 
+                        ['Inventory', 'InviteLinkBox' , 'CharCustomisation', 'SettingsMenu' , 'ShopBody' ].forEach(className => {
+            document.querySelectorAll('.' + className).forEach(BoxOpacity => {
+                BoxOpacity.style.backgroundColor ='transparent';
+                BoxOpacity.style.boxShadow = "none";
+                BoxOpacity.style.border = "3px solid rgb(0, 0, 0)";
+            });
+        });
+
                 ['HeaderRight'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(optionsTR => {
                 optionsTR.style.backgroundColor = "rgba(136, 50, 64,0.45)";
@@ -65,19 +73,7 @@
                 socialbox.style.opacity = '1';
             });
         });
-        ['GameCardContainer', 'GameCardContainer LongRatio'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(GameCards => {
-                GameCards.style.width = "220px";
-                GameCards.style.height = "155px";
-            });
-        });
-        document.querySelectorAll('.ChooseGameWrapper').forEach(GameCards1 => {
-            GameCards1.style.position = 'absolute';
-            GameCards1.style.top = '30%';
-            GameCards1.style.transform = 'translateY(-30%)';
-            GameCards1.style.width = '85%';
-            GameCards1.style.height = '35%';
-        });
+
 
 
     };
@@ -134,7 +130,24 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
             armor.style.backgroundImage = 'url(https://piskel-imgstore-b.appspot.com/img/840035a8-3491-11ef-879a-9f3fc6109f85.gif)';
 });
 
-
+    for (let i = 45; i >= 0; i--) {
+        document.querySelectorAll(`.InvenItem[data-inven-idx="${i}"]`).forEach(Inventory => {
+            Inventory.style.backgroundColor = "transparent";
+            Inventory.style.boxShadow = "none";
+            Inventory.style.border = "3px solid rgb(0, 0, 0)";
+            Inventory.style.borderRadius = "0px";
+            Inventory.style.outline = "transparent";
+        });
+    }
+            for (let i = 86; i >= 51; i--) {
+        document.querySelectorAll(`.InvenItem[data-inven-idx="${i}"]`).forEach(Chests => {
+            Chests.style.backgroundColor = "transparent";
+            Chests.style.boxShadow = "none";
+            Chests.style.border = "3px solid rgb(0, 0, 0)";
+            Chests.style.borderRadius = "0px";
+            Chests.style.outline = "transparent";
+        });
+    }
         document.querySelectorAll('.AvailableGame').forEach(item => {
             item.style.border = "none";
             item.style.borderRadius = "0px";
@@ -291,7 +304,7 @@ mainMenu.appendChild(DSLogo);
     MenuText.style.heght = '50px';
     MenuText.style.marginBottom = '10px';
     MenuText.style.fontSize = '27px';
-    MenuText.style.fontWeight = '200';
+    MenuText.style.fontWeight = '700';
     MenuText.style.color = 'white';
     MenuText.style.backgroundColor = 'transparent';
     MenuText.style.border = 'none';
@@ -1308,7 +1321,7 @@ document.addEventListener('mouseup', ({ button }) => {
 
 
             const hotbarBox = document.createElement('div');
-    hotbarBox.style.width = '170px';
+    hotbarBox.style.width = '161px';
     hotbarBox.style.height = '170px';
     hotbarBox.style.backgroundColor = 'rgb(50, 50, 50)';
     hotbarBox.style.display = 'flex';
@@ -1343,6 +1356,7 @@ document.addEventListener('mouseup', ({ button }) => {
     Cosmetics.innerHTML = `
             <label>COSMETICS</label>
     <button id="closeCosmetics" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+    <p style="color:red; font-weight:900;font-size:15px;">COMING SOON<p>
     `;
 
 hotbarSettingsModal.innerHTML = `
@@ -1368,7 +1382,8 @@ hotbarSettingsModal.innerHTML = `
     <label>TOGGLE SPRINT</label>
     <button id="closetoggleshiftSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
     <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
-    <label style="margin-bottom: 5px;">Press a key to set  toggle key:</label>
+    <label style="margin-bottom: 10px; font-weight: 700;">TOGGLE KEY</label>
+    <label style="margin-bottom: 5px;">Set toggle key for toggle Sprint</label>
         <input type="text" id="customSprintKey" style="width: 75px; text-align: center; margin-bottom: 10px;" readonly>
     </div>
         `;
@@ -1389,7 +1404,7 @@ hotbarSettingsModal.innerHTML = `
         <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
 <label style="margin-bottom: 10px; font-weight: 700;">TOGGLE KEY</label>
-        <label for="customKey" style="margin-bottom: 5px;">Press a key to set  toggle key:</label>
+        <label for="customKey" style="margin-bottom: 5px;">Set toggle key for the client menu:</label>
         <input type="text" id="customKey" style="width: 75px; text-align: center; margin-bottom: 10px;" readonly>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
@@ -1419,7 +1434,7 @@ crosshairSettingsModal.innerHTML = `
     </div>
     <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
-        <img src="https://piskel-imgstore-b.appspot.com/img/b9689d23-1d09-11ef-97f1-878efb6f53d1.gif" style="width: 115px; height: 115px;">
+        <img src="https://piskel-imgstore-b.appspot.com/img/3a948891-4a8f-11ef-8140-5b4c5fd8c3dd.gif" style="width: 115px; height: 115px;">
         <button id="option5Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
     <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
@@ -1447,7 +1462,7 @@ crosshairSettingsModal.innerHTML = `
     </div>
       <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
-        <img src="https://piskel-imgstore-b.appspot.com/img/4ba6dc68-218c-11ef-b537-77cfad41cb01.gif" style="width: 115px; height: 115px;">
+        <img src="https://piskel-imgstore-b.appspot.com/img/3f1093ca-4a8d-11ef-92cc-5b4c5fd8c3dd.gif" style="width: 115px; height: 115px;">
         <button id="option6Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
  </div>
@@ -1475,10 +1490,10 @@ document.getElementById('option3Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/4712921e-1d01-11ef-b4ea-878efb6f53d1.gif';
 });
         document.getElementById('option5Button').addEventListener('click', function() {
-    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/b9689d23-1d09-11ef-97f1-878efb6f53d1.gif';
+    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3a948891-4a8f-11ef-8140-5b4c5fd8c3dd.gif)';
 })
         document.getElementById('option6Button').addEventListener('click', function() {
-    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/4ba6dc68-218c-11ef-b537-77cfad41cb01.gif';
+    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3f1093ca-4a8d-11ef-92cc-5b4c5fd8c3dd.gif';
 })
                 document.getElementById('option7Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3ed96675-4a93-11ef-9811-5b4c5fd8c3dd.gif';

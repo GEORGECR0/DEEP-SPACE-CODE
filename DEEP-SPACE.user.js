@@ -47,13 +47,6 @@
             });
         });
 
-                        ['Inventory', 'InviteLinkBox' , 'CharCustomisation', 'SettingsMenu' , 'ShopBody' ].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(BoxOpacity => {
-                BoxOpacity.style.backgroundColor ='transparent';
-                BoxOpacity.style.boxShadow = "none";
-                BoxOpacity.style.border = "3px solid rgb(0, 0, 0)";
-            });
-        });
 
                 ['HeaderRight'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(optionsTR => {
@@ -130,24 +123,6 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
             armor.style.backgroundImage = 'url(https://piskel-imgstore-b.appspot.com/img/840035a8-3491-11ef-879a-9f3fc6109f85.gif)';
 });
 
-    for (let i = 45; i >= 0; i--) {
-        document.querySelectorAll(`.InvenItem[data-inven-idx="${i}"]`).forEach(Inventory => {
-            Inventory.style.backgroundColor = "transparent";
-            Inventory.style.boxShadow = "none";
-            Inventory.style.border = "3px solid rgb(0, 0, 0)";
-            Inventory.style.borderRadius = "0px";
-            Inventory.style.outline = "transparent";
-        });
-    }
-            for (let i = 86; i >= 51; i--) {
-        document.querySelectorAll(`.InvenItem[data-inven-idx="${i}"]`).forEach(Chests => {
-            Chests.style.backgroundColor = "transparent";
-            Chests.style.boxShadow = "none";
-            Chests.style.border = "3px solid rgb(0, 0, 0)";
-            Chests.style.borderRadius = "0px";
-            Chests.style.outline = "transparent";
-        });
-    }
         document.querySelectorAll('.AvailableGame').forEach(item => {
             item.style.border = "none";
             item.style.borderRadius = "0px";
@@ -836,32 +811,58 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => isMoving = false);
 }
 
+let clickTimes = [];
+let cpsInterval = null;
+let clickListener = null;
+
 cpsToggleButton.addEventListener('click', function() {
     if (cpsToggleButton.textContent === 'Disabled') {
         cpsToggleButton.textContent = 'Enabled';
         createCPSCounter();
-        let clickCount = 0;
-        let cps = 0;
 
-        function updateCPS() {
-            cps = clickCount;
-            cpsCounter.innerText = 'CPS: ' + cps ;
-            clickCount = 0;
+        function countClick() {
+            var currentTime = new Date().getTime();
+            clickTimes.push(currentTime);
+            updateCPS();
         }
 
-        setInterval(updateCPS, 1000);
+        function updateCPS() {
+            var currentTime = new Date().getTime();
+            var oneSecondAgo = currentTime - 1000;
 
-        document.addEventListener('click', function() {
-            clickCount++;
-        });
+            clickTimes = clickTimes.filter(time => time >= oneSecondAgo);
+
+            cpsCounter.innerText = 'CPS: ' + clickTimes.length;
+        }
+
+        clickListener = function() {
+            countClick();
+        };
+
+        document.addEventListener('click', clickListener);
+
+        cpsInterval = setInterval(updateCPS, 1000);
+
     } else {
         cpsToggleButton.textContent = 'Disabled';
+
+        if (cpsInterval) {
+            clearInterval(cpsInterval);
+            cpsInterval = null;
+        }
+        if (clickListener) {
+            document.removeEventListener('click', clickListener);
+            clickListener = null;
+        }
         if (cpsCounter) {
             cpsCounter.remove();
             cpsCounter = null;
         }
+        clickTimes = [];
     }
 });
+
+
 
     cpsButtonContainer.appendChild(cpsToggleButton);
 

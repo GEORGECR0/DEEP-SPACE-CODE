@@ -21,8 +21,8 @@
 
 
 
-    function updateGameAppearance() {
-        document.title = "Bloxd.io - Deep Space Client";
+    function fast_refresh() {
+                        document.title = "Bloxd.io - Deep Space Client";
         const maintext = document.querySelector('.Title.FullyFancyText');
         if (maintext) {
             maintext.style.webkitTextStroke = "none";
@@ -35,7 +35,38 @@
             background.style.backgroundImage = 'url(https://i.postimg.cc/v8rFjRWq/MAINBACKGROUND.jpg)';
         }
 
-    const modifyElements = () => {
+                const crosshair = document.querySelector(".CrossHair");
+        if (crosshair) {
+            crosshair.textContent = "";
+            crosshair.style.backgroundImage = `url(${crosshairvalue})`;
+            crosshair.style.backgroundRepeat = "no-repeat";
+            crosshair.style.backgroundSize = "contain";
+            crosshair.style.width = CrossSize + "px";
+            crosshair.style.height = CrossSize + "px";
+        }
+
+        document.querySelectorAll(".HotBarItem").forEach(hotbar => {
+            hotbar.style.borderRadius = "12px";
+            hotbar.style.borderColor = colorPicker1Value;
+            hotbar.style.backgroundColor = "transparent";
+            hotbar.style.boxShadow = "none";
+            hotbar.style.outline = "transparent";
+        });
+
+        document.querySelectorAll(".SelectedItem").forEach(slot => {
+            slot.style.backgroundColor = "transparent";
+            slot.style.boxShadow = "none";
+            slot.style.borderRadius = "15px";
+            slot.style.borderColor = colorPicker2Value;
+            slot.style.outline = "transparent";
+        });
+
+
+    }
+    setInterval(fast_refresh, 70 );
+
+    const UI_aesthetics = () => {
+
         ['LogoContainer', 'cube' , 'HomeScreenBottomLeft'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(el => el.remove());
         });
@@ -65,40 +96,6 @@
                 socialbox.style.backgroundColor = "rgba(0,0,0,1)";
                 socialbox.style.opacity = '1';
             });
-        });
-
-
-
-    };
-
-    document.addEventListener('DOMContentLoaded', modifyElements);
-    setInterval(modifyElements, 1000);
-
-
-        const crosshair = document.querySelector(".CrossHair");
-        if (crosshair) {
-            crosshair.textContent = "";
-            crosshair.style.backgroundImage = `url(${crosshairvalue})`;
-            crosshair.style.backgroundRepeat = "no-repeat";
-            crosshair.style.backgroundSize = "contain";
-            crosshair.style.width = CrossSize + "px";
-            crosshair.style.height = CrossSize + "px";
-        }
-
-        document.querySelectorAll(".HotBarItem").forEach(hotbar => {
-            hotbar.style.borderRadius = "12px";
-            hotbar.style.borderColor = colorPicker1Value;
-            hotbar.style.backgroundColor = "transparent";
-            hotbar.style.boxShadow = "none";
-            hotbar.style.outline = "transparent";
-        });
-
-        document.querySelectorAll(".SelectedItem").forEach(slot => {
-            slot.style.backgroundColor = "transparent";
-            slot.style.boxShadow = "none";
-            slot.style.borderRadius = "15px";
-            slot.style.borderColor = colorPicker2Value;
-            slot.style.outline = "transparent";
         });
 
 document.querySelectorAll('.InvenItem[data-inven-idx="46"], .InvenItem[data-inven-idx="47"], .InvenItem[data-inven-idx="48"], .InvenItem[data-inven-idx="49"], .InvenItem[data-inven-idx="50"]').forEach(ARMOR => {
@@ -135,9 +132,14 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
         document.querySelectorAll('.AvailableGameTextWrapperBackground').forEach(removebox => {
             removebox.style.opacity= "0";
         });
-    }
 
-    setInterval(updateGameAppearance, 100 );
+
+    };
+
+    document.addEventListener('DOMContentLoaded', UI_aesthetics);
+    setInterval(UI_aesthetics, 1000);
+
+
 
 const createhud = (id, zIndex) => {
     const hud = document.createElement('div');

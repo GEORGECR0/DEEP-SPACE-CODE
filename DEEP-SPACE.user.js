@@ -6,27 +6,28 @@
 // @author       GEORGECR
 // @match        https://bloxd.io/
 // @match        https://bloxd.io/?utm_source=pwa
-// @match        https://staging.bloxd.io/
 // @icon         https://i.postimg.cc/NMG91FWH/space-BG-loco.jpg
 // @license      MIT
 // @grant        none
+// @downloadURL https://update.greasyfork.org/scripts/489428/Deep%20Space%20Client.user.js
+// @updateURL https://update.greasyfork.org/scripts/489428/Deep%20Space%20Client.meta.js
 // ==/UserScript==
 
 (function() {
     //copyright Deep Space Client
     'use strict';
-    let crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/7be1c5f3-9ad1-11ef-b170-45e28d82b1ad.gif';
+    let crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/d81e6523-1d08-11ef-8eba-878efb6f53d1.gif';
     let CrossSize = '19';
     let colorPicker1Value = '#000000';
     let colorPicker2Value = '#FFFFFF';
 
 
 
-    function fast_refresh() {
-                        document.title = "Bloxd.io - Deep Space Client";
+    function updateGameAppearance() {
+        document.title = "Bloxd.io - Deep Space Client";
         const maintext = document.querySelector('.Title.FullyFancyText');
         if (maintext) {
-            maintext.style.webkitTextStroke = "0px";
+            maintext.style.webkitTextStroke = "none";
             maintext.textContent = "DEEP SPACE";
             maintext.style.textShadow = "10px 5px 5px #000000";
         }
@@ -36,38 +37,7 @@
             background.style.backgroundImage = 'url(https://i.postimg.cc/v8rFjRWq/MAINBACKGROUND.jpg)';
         }
 
-                const crosshair = document.querySelector(".CrossHair");
-        if (crosshair) {
-            crosshair.textContent = "";
-            crosshair.style.backgroundImage = `url(${crosshairvalue})`;
-            crosshair.style.backgroundRepeat = "no-repeat";
-            crosshair.style.backgroundSize = "contain";
-            crosshair.style.width = CrossSize + "px";
-            crosshair.style.height = CrossSize + "px";
-        }
-
-        document.querySelectorAll(".HotBarItem").forEach(hotbar => {
-            hotbar.style.borderRadius = "12px";
-            hotbar.style.borderColor = colorPicker1Value;
-            hotbar.style.backgroundColor = "transparent";
-            hotbar.style.boxShadow = "none";
-            hotbar.style.outline = "transparent";
-        });
-
-        document.querySelectorAll(".SelectedItem").forEach(slot => {
-            slot.style.backgroundColor = "transparent";
-            slot.style.boxShadow = "none";
-            slot.style.borderRadius = "15px";
-            slot.style.borderColor = colorPicker2Value;
-            slot.style.outline = "transparent";
-        });
-
-
-    }
-    setInterval(fast_refresh, 70 );
-
-    const UI_aesthetics = () => {
-
+    const modifyElements = () => {
         ['LogoContainer', 'cube' , 'HomeScreenBottomLeft'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(el => el.remove());
         });
@@ -97,6 +67,40 @@
                 socialbox.style.backgroundColor = "rgba(0,0,0,1)";
                 socialbox.style.opacity = '1';
             });
+        });
+
+
+
+    };
+
+    document.addEventListener('DOMContentLoaded', modifyElements);
+    setInterval(modifyElements, 1000);
+
+
+        const crosshair = document.querySelector(".CrossHair");
+        if (crosshair) {
+            crosshair.textContent = "";
+            crosshair.style.backgroundImage = `url(${crosshairvalue})`;
+            crosshair.style.backgroundRepeat = "no-repeat";
+            crosshair.style.backgroundSize = "contain";
+            crosshair.style.width = CrossSize + "px";
+            crosshair.style.height = CrossSize + "px";
+        }
+
+        document.querySelectorAll(".HotBarItem").forEach(hotbar => {
+            hotbar.style.borderRadius = "12px";
+            hotbar.style.borderColor = colorPicker1Value;
+            hotbar.style.backgroundColor = "transparent";
+            hotbar.style.boxShadow = "none";
+            hotbar.style.outline = "transparent";
+        });
+
+        document.querySelectorAll(".SelectedItem").forEach(slot => {
+            slot.style.backgroundColor = "transparent";
+            slot.style.boxShadow = "none";
+            slot.style.borderRadius = "15px";
+            slot.style.borderColor = colorPicker2Value;
+            slot.style.outline = "transparent";
         });
 
 document.querySelectorAll('.InvenItem[data-inven-idx="46"], .InvenItem[data-inven-idx="47"], .InvenItem[data-inven-idx="48"], .InvenItem[data-inven-idx="49"], .InvenItem[data-inven-idx="50"]').forEach(ARMOR => {
@@ -133,14 +137,9 @@ document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').
         document.querySelectorAll('.AvailableGameTextWrapperBackground').forEach(removebox => {
             removebox.style.opacity= "0";
         });
+    }
 
-
-    };
-
-    document.addEventListener('DOMContentLoaded', UI_aesthetics);
-    setInterval(UI_aesthetics, 1000);
-
-
+    setInterval(updateGameAppearance, 100 );
 
 const createhud = (id, zIndex) => {
     const hud = document.createElement('div');
@@ -223,6 +222,9 @@ const createhud = (id, zIndex) => {
     crosshairSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
 
         const cpsSettingsModal = createBox('cpsSettingsModal', '1002');
+    crosshairSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
+
+            const pingSettingsModal = createBox('pingSettingsModal', '1002');
     crosshairSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
 
                         const hotbarSettingsModal = createBox('hotbarSettingsModal', '1002');
@@ -884,105 +886,113 @@ cpsToggleButton.addEventListener('click', function() {
     cpsBox.appendChild(cpsButtonContainer);
     row2.appendChild(cpsBox);
 
-const pingBox = document.createElement('div');
-pingBox.style.width = '170px';
-pingBox.style.height = '170px';
-pingBox.style.backgroundColor = 'rgb(50, 50, 50)';
-pingBox.style.display = 'flex';
-pingBox.style.border = '2px solid rgb(60, 60, 60)';
-pingBox.style.flexDirection = 'column';
-pingBox.style.justifyContent = 'space-between';
-pingBox.style.alignItems = 'center';
-pingBox.style.padding = '10px';
-pingBox.style.borderRadius = '10px';
+        const pingBox = document.createElement('div');
+    pingBox.style.width = '170px';
+    pingBox.style.height = '170px';
+    pingBox.style.backgroundColor = 'rgb(50, 50, 50)';
+    pingBox.style.display = 'flex';
+    pingBox.style.border = '2px solid rgb(60, 60, 60)';
+    pingBox.style.flexDirection = 'column';
+    pingBox.style.justifyContent = 'space-between';
+    pingBox.style.alignItems = 'center';
+    pingBox.style.padding = '10px';
+    pingBox.style.borderRadius = '10px';
 
-const pingText = document.createElement('span');
-pingText.textContent = 'PING COUNTER';
-pingBox.appendChild(pingText);
+    const pingText = document.createElement('span');
+    pingText.textContent = 'PING COUNTER';
+    pingBox.appendChild(pingText);
 
-const pingToggleButton = document.createElement('button');
-pingToggleButton.textContent = 'Disabled'; // Start as disabled
-pingToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
-pingToggleButton.style.borderRadius = '10px';
-pingToggleButton.style.border = 'none';
-pingToggleButton.style.color = 'white';
-pingToggleButton.style.width = '160px';
-pingToggleButton.style.height = '40px';
-pingToggleButton.style.fontSize = '18px';
-pingToggleButton.style.cursor = 'pointer';
+    const pingButtonContainer = document.createElement('div');
+    pingButtonContainer.style.display = 'flex';
+    pingButtonContainer.style.justifyContent = 'space-between';
+    pingButtonContainer.style.width = '100%';
 
-// Initialize pinging state
-let isPinging = false; // Variable to track pinging status
-let pingInterval; // Variable to store the interval ID
+    const pingToggleButton = document.createElement('button');
+    pingToggleButton.textContent = 'Disabled';
+    pingToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
+    pingToggleButton.style.borderRadius = '10px';
+    pingToggleButton.style.border = 'none';
+    pingToggleButton.style.color = 'white';
+    pingToggleButton.style.width = '100px';
+    pingToggleButton.style.height = '40px';
+    pingToggleButton.style.fontSize = '18px';
+    pingToggleButton.style.cursor = 'pointer';
+let pingCounter;
+function createPingCounter() {
+    pingCounter = document.createElement('div');
+    pingCounter.style.position = 'fixed';
+    pingCounter.style.top = '96%';
+    pingCounter.style.left = '89.5%';
+    pingCounter.style.padding = '5px 10px';
+    pingCounter.style.backgroundColor = '#00000066' ;
+    pingCounter.style.color = 'white';
+    pingCounter.style.fontSize = '16px';
+    pingCounter.style.zIndex = '1000';
+    pingCounter.innerText = 'Ping: 0 ms';
+    pingCounter.style.cursor = 'pointer';
+    mainHud.appendChild(pingCounter);
 
-pingToggleButton.addEventListener('click', () => {
-    isPinging = !isPinging; // Toggle pinging state
+let isMoving = false;
+let OffsetPX = 0;
+let OffsetPY = 0;
 
-    if (isPinging) {
-        pingToggleButton.textContent = 'Enabled';
-        pingCounter.startPinging(1500); // Start pinging every 1.5 seconds
-        pingCounter.pingTimeDisplay.style.display = 'block'; // Show ping time display
-    } else {
-        pingToggleButton.textContent = 'Disabled';
-        clearInterval(pingInterval); // Stop pinging
-        pingCounter.pingTimeDisplay.style.display = 'none'; // Hide ping time display
+pingCounter.addEventListener('mousedown', (e) => {
+    if (pingToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && e.target.nodeName !== 'INPUT') {
+        isMoving = true;
+        OffsetPX = e.clientX;
+        OffsetPY = e.clientY;
     }
 });
-pingBox.appendChild(pingToggleButton); // Add the toggle button to the container
-row2.appendChild(pingBox); // Assuming row2 is defined elsewhere
 
-class PingCounter {
-    constructor(url) {
-        // Store variables as local constants
-        this.pingCount = 0; // Change from const to this to access in methods
-        this.url = url;
-
-        // Create an element to display ping time
-        this.pingTimeDisplay = document.createElement('div');
-        this.pingTimeDisplay.id = 'pingTimeDisplay';
-        this.pingTimeDisplay.innerText = 'Ping : ';
-        this.pingTimeDisplay.style.display = 'none'; // Hide by default
-
-        // Style the ping time display
-        this.pingTimeDisplay.style.position = 'fixed';
-        this.pingTimeDisplay.style.top = '96%';
-        this.pingTimeDisplay.style.left = '89%';
-        this.pingTimeDisplay.style.padding = '5px 10px';
-        this.pingTimeDisplay.style.backgroundColor = '#00000066' ;
-        this.pingTimeDisplay.style.color = 'white';
-        this.pingTimeDisplay.style.fontSize = '16px';
-        this.pingTimeDisplay.style.zIndex = '1000';
-
-        document.body.appendChild(this.pingTimeDisplay);
+document.addEventListener('mousemove', (e) => {
+    if (pingToggleButton.textContent === 'Enabled' && isMoving) {
+        pingCounter.style.left = `${e.clientX}px`;
+        pingCounter.style.top = `${e.clientY}px`;
     }
+});
 
-    ping() {
-        const start = new Date().getTime();
-        fetch(this.url, { method: 'HEAD', mode: 'no-cors' })
-            .then(() => {
-                const end = new Date().getTime();
-                const pingTime = end - start;
+document.addEventListener('mouseup', () => isMoving = false);
 
-                // Update ping time on screen
-                this.pingTimeDisplay.innerText = `Ping : ${pingTime} ms`;
-                this.pingCount++;
-            })
-            .catch((error) => {
-                console.error('Ping failed:', error);
-            });
-    }
-
-    // Start pinging
-    startPinging(interval) {
-        this.ping(); // Initial ping
-        pingInterval = setInterval(() => this.ping(), interval); // Repeat pinging
-    }
 }
 
-// Initialize PingCounter
-const pingCounter = new PingCounter('https://bloxd.io');
+pingToggleButton.addEventListener('click', function() {
+    if (pingToggleButton.textContent === 'Disabled') {
+        pingToggleButton.textContent = 'Enabled';
+        createPingCounter();
 
+        function updatePing() {
+            let ping = Math.floor(Math.random() * 100);
+            pingCounter.innerText = 'Ping: ' + ping + ' ms';
+        }
 
+        setInterval(updatePing, 1000);
+    } else {
+        pingToggleButton.textContent = 'Disabled';
+        if (pingCounter) {
+            pingCounter.remove();
+            pingCounter = null;
+        }
+    }
+});
+    pingButtonContainer.appendChild(pingToggleButton);
+
+    const pingSettingsButton = document.createElement('button');
+    pingSettingsButton.innerHTML = '⚙';
+    pingSettingsButton.style.backgroundColor = 'rgb(40, 40, 40)';
+    pingSettingsButton.style.borderRadius = '10px';
+    pingSettingsButton.style.border = 'none';
+    pingSettingsButton.style.color = 'white';
+    pingSettingsButton.style.fontSize = '24px';
+    pingSettingsButton.style.width = '40px';
+    pingSettingsButton.style.height = '40px';
+    pingSettingsButton.style.cursor = 'pointer';
+    pingSettingsButton.addEventListener('click', function() {
+        pingSettingsModal.style.display = 'block';
+    });
+    pingButtonContainer.appendChild(pingSettingsButton);
+
+    pingBox.appendChild(pingButtonContainer);
+    row2.appendChild(pingBox);
 
 const HandItemBox = document.createElement('div');
 HandItemBox.style.width = '170px';
@@ -1346,81 +1356,6 @@ document.addEventListener('mouseup', ({ button }) => {
 
     row3.appendChild(hotbarBox);
 
-           const resolutionBox = document.createElement('div');
-    resolutionBox.style.width = '161px';
-    resolutionBox.style.height = '170px';
-    resolutionBox.style.backgroundColor = 'rgb(50, 50, 50)';
-    resolutionBox.style.display = 'flex';
-    resolutionBox.style.border = '2px solid rgb(60, 60, 60)';
-    resolutionBox.style.flexDirection = 'column';
-    resolutionBox.style.justifyContent = 'space-between';
-    resolutionBox.style.alignItems = 'center';
-    resolutionBox.style.padding = '10px';
-    resolutionBox.style.borderRadius = '10px';
-
-
-
-    const resolutionText = document.createElement('span');
-    resolutionText.textContent = 'RESOLUTION';
-    resolutionBox.appendChild(resolutionText);
-
-        const resolution2Text = document.createElement('span');
-    resolution2Text.textContent = 'ADJUSTER';
-    resolution2Text.style.marginTop = '-95px';
-    resolutionBox.appendChild(resolution2Text);
-
-    const resolutionButtonContainer = document.createElement('div');
-    resolutionButtonContainer.style.display = 'flex';
-    resolutionButtonContainer.style.justifyContent = 'space-between';
-    resolutionButtonContainer.style.width = '100%';
-
-    const resolutionToggleButton = document.createElement('button');
-    resolutionToggleButton.textContent = 'Enabled';
-    resolutionToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
-    resolutionToggleButton.style.borderRadius = '10px';
-    resolutionToggleButton.style.border = 'none';
-    resolutionToggleButton.style.color = 'white';
-    resolutionToggleButton.style.width = '100px';
-    resolutionToggleButton.style.height = '40px';
-    resolutionToggleButton.style.fontSize = '18px';
-    resolutionToggleButton.style.cursor = 'pointer';
-    resolutionToggleButton.addEventListener('click', function() {
-        if (resolutionToggleButton.textContent === 'Enabled') {
-            resolutionToggleButton.textContent = 'Disabled';
-        } else {
-            resolutionToggleButton.textContent = 'Enabled';
-        }
-    });
-    resolutionButtonContainer.appendChild(resolutionToggleButton);
-
-    const resolutionSettingsButton = document.createElement('button');
-    resolutionSettingsButton.innerHTML = '⚙';
-    resolutionSettingsButton.style.backgroundColor = 'rgb(40, 40, 40)';
-    resolutionSettingsButton.style.borderRadius = '10px';
-    resolutionSettingsButton.style.border = 'none';
-    resolutionSettingsButton.style.color = 'white';
-    resolutionSettingsButton.style.fontSize = '24px';
-    resolutionSettingsButton.style.width = '40px';
-    resolutionSettingsButton.style.height = '40px';
-    resolutionSettingsButton.style.cursor = 'pointer';
-    resolutionSettingsButton.addEventListener('click', function() {
-       resolutionSettingsModal.style.display = 'block';
-    });
-    resolutionButtonContainer.appendChild(resolutionSettingsButton);
-
-    resolutionBox.appendChild(resolutionButtonContainer);
-
-    row3.appendChild(resolutionBox);
-
-    resolutionSettingsModal.innerHTML = `
-        <label>RESOLUTION REDUCER</label>
-        <button id="closeResolutionSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
-        <br>
-        <input type="range" id="resolutionSlider" min="0" max="1.0" step="0.1" value="1.0" style="width: 100%;">
-        <label id="resolutionValueLabel">Resolution: 1.0x</label>
-    `;
-
-
     Cosmetics.innerHTML = `
             <label>COSMETICS</label>
     <button id="closeCosmetics" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
@@ -1455,6 +1390,11 @@ hotbarSettingsModal.innerHTML = `
         <input type="text" id="customSprintKey" style="width: 75px; text-align: center; margin-bottom: 10px;" readonly>
     </div>
         `;
+
+        pingSettingsModal.innerHTML = `
+        <label>PING</label>
+        <button id="closePingSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+    `;
 
         cpsSettingsModal.innerHTML = `
         <label>CPS COUNTER</label>
@@ -1492,7 +1432,7 @@ crosshairSettingsModal.innerHTML = `
 <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 15px;">
     <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
-        <img src="https://piskel-imgstore-b.appspot.com/img/7be1c5f3-9ad1-11ef-b170-45e28d82b1ad.gif" style="width: 115px; height: 115px;">
+        <img src="https://piskel-imgstore-b.appspot.com/img/d81e6523-1d08-11ef-8eba-878efb6f53d1.gif" style="width: 115px; height: 115px;">
         <button id="option3Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
     <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
@@ -1514,7 +1454,7 @@ crosshairSettingsModal.innerHTML = `
 <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 15px;">
   <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
-        <img src="https://piskel-imgstore-b.appspot.com/img/1904aeee-9ad2-11ef-b197-45e28d82b1ad.gif" style="width: 115px; height: 115px;">
+        <img src="https://piskel-imgstore-b.appspot.com/img/4712921e-1d01-11ef-b4ea-878efb6f53d1.gif" style="width: 115px; height: 115px;">
         <button id="option4Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
       <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
@@ -1531,14 +1471,9 @@ crosshairSettingsModal.innerHTML = `
  </div>
  <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 15px;">
        <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
-        <label>CROSSHAIR</label>
+        <label>CROSSHAIR 7</label>
         <img src="https://piskel-imgstore-b.appspot.com/img/d46740e1-4a92-11ef-9ed7-5b4c5fd8c3dd.gif" style="width: 115px; height: 115px;">
         <button id="option7Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
-    </div>
-           <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
-        <label>CROSSHAIR</label>
-        <img src="https://piskel-imgstore-b.appspot.com/img/42579dc0-99cd-11ef-808f-0b01a4cf3689.gif" style="width: 115px; height: 115px;">
-        <button id="option8Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
     </div>
 `;
@@ -1552,10 +1487,10 @@ document.getElementById('option2Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/18315826-1cd8-11ef-a2e5-bbb60d940ece.gif';
 });
 document.getElementById('option3Button').addEventListener('click', function() {
-    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/7be1c5f3-9ad1-11ef-b170-45e28d82b1ad.gif';
+    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/d81e6523-1d08-11ef-8eba-878efb6f53d1.gif';
 });
     document.getElementById('option4Button').addEventListener('click', function() {
-    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/1904aeee-9ad2-11ef-b197-45e28d82b1ad.gif';
+    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/4712921e-1d01-11ef-b4ea-878efb6f53d1.gif';
 });
         document.getElementById('option5Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3a948891-4a8f-11ef-8140-5b4c5fd8c3dd.gif)';
@@ -1565,9 +1500,6 @@ document.getElementById('option3Button').addEventListener('click', function() {
 })
                 document.getElementById('option7Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3ed96675-4a93-11ef-9811-5b4c5fd8c3dd.gif';
-})
-                    document.getElementById('option8Button').addEventListener('click', function() {
-    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/e5874b87-99cc-11ef-a284-0b01a4cf3689.gif';
 })
 
 
@@ -1594,49 +1526,6 @@ document.getElementById('colorPicker2').addEventListener('input', function() {
      window.open('https://georgecr0.github.io/DeepSpaceClient/index.html', '_blank');
 })
 
-
-    const zoomSlider = document.getElementById('zoomSlider');
-    const zoomValueLabel = document.getElementById('zoomValueLabel');
-
-    let resolutionScale = 1.0;
-
-    // Function to adjust the canvas resolution
-    function adjustCanvasResolution(scale) {
-        const canvas = document.querySelector('canvas');
-        if (!canvas) return;
-
-        // Set the resolution scale based on the slider value
-        resolutionScale = scale;
-
-        // Adjust the internal resolution of the canvas
-        const originalWidth = canvas.offsetWidth;
-        const originalHeight = canvas.offsetHeight;
-
-        // Set the canvas width and height based on the scale
-        canvas.width = originalWidth * resolutionScale;
-        canvas.height = originalHeight * resolutionScale;
-
-        // Adjust the scaling in the rendering context to fit the new resolution
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-            ctx.setTransform(resolutionScale, 0, 0, resolutionScale, 0, 0);
-        }
-    }
-
-    // Get references to the resolution slider and resolution value label
-    const resolutionSlider = document.getElementById('resolutionSlider');
-    const resolutionValueLabel = document.getElementById('resolutionValueLabel');
-
-    // Event listener for the resolution slider
-    resolutionSlider.addEventListener('input', function() {
-        // Update the resolution scale based on the slider value
-        const scaleValue = parseFloat(resolutionSlider.value);
-        adjustCanvasResolution(scaleValue);
-
-        // Update the resolution value label
-        resolutionValueLabel.textContent = `Resolution: ${scaleValue.toFixed(1)}x`;
-    });
-
 let toggleKey = 'ShiftRight';
 let boxVisible = false;
 let isSettingKey = false;
@@ -1654,6 +1543,7 @@ document.addEventListener('keydown', function(event) {
             settingsModal.style.display = boxVisible ? 'none' : 'none';
             crosshairSettingsModal.style.display = boxVisible ? 'none' : 'none';
             cpsSettingsModal.style.display = boxVisible ? 'none' : 'none';
+            pingSettingsModal.style.display = boxVisible ? 'none' : 'none';
             toggleshiftSettingsModal.style.display = boxVisible ? 'none' : 'none';
             resolutionSettingsModal.style.display = boxVisible ? 'none' : 'none';
             hotbarSettingsModal.style.display = boxVisible ? 'none' : 'none';
@@ -1687,10 +1577,6 @@ settingsButton.addEventListener('click', function() {
         Cosmetics.style.display = 'none';
     });
 
-              document.getElementById('closeResolutionSettings').addEventListener('click', function() {
-        resolutionSettingsModal.style.display = 'none';
-    });
-
     document.getElementById('customKey').addEventListener('click', function() {
         isSettingKey = true;
         this.value = 'PRESS A KEY';
@@ -1708,6 +1594,10 @@ settingsButton.addEventListener('click', function() {
     });
         document.getElementById('closeCpsSettings').addEventListener('click', function() {
         cpsSettingsModal.style.display = 'none';
+
+    });
+            document.getElementById('closePingSettings').addEventListener('click', function() {
+        pingSettingsModal.style.display = 'none';
 
     });
                                 document.getElementById('closetoggleshiftSettings').addEventListener('click', function() {

@@ -1394,7 +1394,7 @@ document.addEventListener('mouseup', ({ button }) => {
     row3.appendChild(resolutionBox);
 
     resolutionSettingsModal.innerHTML = `
-        <label>RESOLUTION REDUCER</label>
+        <label>RESOLUTION ADJUSTER</label>
         <button id="closeResolutionSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
         <br>
         <input type="range" id="resolutionSlider" min="0.1" max="1.0" step="0.1" value="1.0" style="width: 30%;">
@@ -1535,7 +1535,7 @@ document.getElementById('option3Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/1904aeee-9ad2-11ef-b197-45e28d82b1ad.gif';
 });
         document.getElementById('option5Button').addEventListener('click', function() {
-    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3a948891-4a8f-11ef-8140-5b4c5fd8c3dd.gif)';
+    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3a948891-4a8f-11ef-8140-5b4c5fd8c3dd.gif';
 })
         document.getElementById('option6Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3f1093ca-4a8d-11ef-92cc-5b4c5fd8c3dd.gif';

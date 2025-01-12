@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Deep Space Client
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.2
 // @description  Deep Space Client for bloxd.io
 // @author       GEORGECR
 // @match        https://bloxd.io/
@@ -21,7 +21,6 @@
     let colorPicker2Value = '#FFFFFF';
 
 
-
     function fast_refresh() {
                         document.title = "Bloxd.io - Deep Space Client";
         const maintext = document.querySelector('.Title.FullyFancyText');
@@ -29,6 +28,7 @@
             maintext.style.webkitTextStroke = "0px";
             maintext.textContent = "DEEP SPACE";
             maintext.style.textShadow = "10px 5px 5px #000000";
+
         }
 
         const background = document.querySelector(".HomeBackground");
@@ -62,7 +62,46 @@
             slot.style.outline = "transparent";
         });
 
+               ['SocialBarInner'].forEach(className => {
+            document.querySelectorAll('.' + className).forEach(socialbox => {
+                socialbox.style.backgroundColor = "rgba(0,0,0,1)";
+                socialbox.style.opacity = '1';
+            });
+        });
 
+                                                ['Inventory' , 'SettingsMenu' , 'InviteLinkBox' , 'ShopBody '].forEach(className => {
+            document.querySelectorAll('.' + className).forEach(BloxdUIBoxes => {
+                BloxdUIBoxes.style.backgroundColor = 'transparent';
+                BloxdUIBoxes.style.border = "3px solid black";
+                BloxdUIBoxes.style.boxShadow = "none";
+               BloxdUIBoxes.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent background
+               BloxdUIBoxes.style.backdropFilter = 'blur(5px)'; // Blur effect
+
+            });
+        });
+
+           document.querySelectorAll('.CreativeItemSlotsSearch').forEach(searchbar => {
+               searchbar.style.color = 'white';
+               searchbar.style.textShadow = "none";
+            searchbar.style.backgroundColor = 'transparent';
+            searchbar.style.border = "2px solid black";
+               searchbar.style.boxShadow = "none";
+               searchbar.style.borderRadius = "0px";
+             });
+
+      ['ShopItem' , 'SelectedItemViewer' , 'SelectedItemImageDiv' , 'SelectedItemHeaderDiv' , 'ShopItemHeaderDiv'].forEach(className => {
+            document.querySelectorAll('.' + className).forEach(SHOPSHIT => {
+SHOPSHIT.style.backgroundColor = 'transparent';
+             });
+                   });
+                                ['SettingsMenuLeft' , 'SettingsSectionTitle' , 'ShopSidebarMenu' , 'SidebarMenuTitle' , 'SidebarMenu'].forEach(className => {
+            document.querySelectorAll('.' + className).forEach(settingsMenuL => {
+             settingsMenuL.style.backgroundColor = 'transparent';
+             settingsMenuL.style.border = "none";
+                settingsMenuL.style.textShadow = "none";
+
+            });
+        });
     }
     setInterval(fast_refresh, 70 );
 
@@ -72,10 +111,12 @@
             document.querySelectorAll('.' + className).forEach(el => el.remove());
         });
 
-        ['GameAdsBanner', 'HomeBannerInner'].forEach(className => {
+        ['GameAdsBanner', 'HomeBannerInner' , 'ShopBannerDiv' , 'SettingsAdOuter' , 'InventoryAdInner'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(ads => {
                 ads.style.opacity = '0';
                 ads.style.transform = 'translateX(100%)';
+                ads.style.height = '2px';
+                ads.style.widght = '2px';
             });
         });
 
@@ -92,13 +133,17 @@
                 optionsTL.style.textShadow = "none";
             });
         });
-               ['SocialBarInner'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(socialbox => {
-                socialbox.style.backgroundColor = "rgba(0,0,0,1)";
-                socialbox.style.opacity = '1';
+                                ['TextFromServerEntityName'].forEach(className => {
+            document.querySelectorAll('.' + className).forEach(optionsTL => {
+                optionsTL.style.color = "white";
             });
         });
 
+               document.querySelectorAll('.InvenItem').forEach(invenItem => {
+                invenItem.style.backgroundColor = 'transparent';
+                invenItem.style.border ="3px solid black";
+                invenItem.style.borderRadius = "0px";
+            });
 document.querySelectorAll('.InvenItem[data-inven-idx="46"], .InvenItem[data-inven-idx="47"], .InvenItem[data-inven-idx="48"], .InvenItem[data-inven-idx="49"], .InvenItem[data-inven-idx="50"]').forEach(ARMOR => {
     ARMOR.style.backgroundColor = "transparent";
     ARMOR.style.boxShadow = "none";
@@ -118,7 +163,7 @@ document.querySelectorAll('.InvenItem[data-inven-idx="49"] .InvenItemUnfilled').
             armor.style.backgroundImage = 'url(https://piskel-imgstore-b.appspot.com/img/f1d6cc85-3493-11ef-a098-9f3fc6109f85.gif)';
 });
 document.querySelectorAll('.InvenItem[data-inven-idx="50"] .InvenItemUnfilled').forEach(armor => {
-            armor.style.backgroundImage = 'url(https://piskel-imgstore-b.appspot.com/img/840035a8-3491-11ef-879a-9f3fc6109f85.gif)';
+            armor.style.backgroundImage = 'url(https://piskel-imgstore-b.appspot.com/img/e3868a0c-d01f-11ef-b884-578249ac6cf7.gif)';
 });
 
         document.querySelectorAll('.AvailableGame').forEach(item => {
@@ -216,29 +261,36 @@ const createhud = (id, zIndex) => {
     };
     const mainMenu = createmenu('toggleMenu', '1000');
     const mainBox = createBox('toggleBox', '1000');
-    const settingsModal = createBox('settingsModal', '1001');
+    const settingsModal = createBox('settingsModal', '1002');
     settingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
 
     const crosshairSettingsModal = createBox('crosshairSettingsModal', '1002');
     crosshairSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
 
                         const hotbarSettingsModal = createBox('hotbarSettingsModal', '1002');
-    hotbarSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)'
+        hotbarSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent background
+hotbarSettingsModal.style.backdropFilter = 'blur(5px)'; // Blur effect
+hotbarSettingsModal.style.justifyContent = 'center';
+hotbarSettingsModal.style.alignItems = 'center';
 
-                    const toggleshiftSettingsModal = createBox('toggleshiftSettingsModal', '1002');
-    toggleshiftSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)'
+const toggleshiftSettingsModal = createBox('toggleshiftSettingsModal', '1002');
+toggleshiftSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent background
+toggleshiftSettingsModal.style.backdropFilter = 'blur(5px)'; // Blur effect
+toggleshiftSettingsModal.style.justifyContent = 'center';
+toggleshiftSettingsModal.style.alignItems = 'center';
 
-                           const Cosmetics = createBox('Cosmetics', '1002');
-    Cosmetics.style.backgroundColor = 'rgb(40, 40, 40)'
 
                          const EditHud = createBox('EditHud', '1002');
-    EditHud.style.backgroundColor = 'transparent'
+    EditHud.style.backgroundColor = 'transparent';
     EditHud.style.justifyContent = 'space-between';
     EditHud.style.flexDirection = 'column';
     EditHud.style.alignItems = 'center';
 
                             const resolutionSettingsModal = createBox('resolutionSettingsModal', '1002');
-    resolutionSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)'
+    resolutionSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent background
+resolutionSettingsModal.style.backdropFilter = 'blur(5px)'; // Blur effect
+resolutionSettingsModal.style.justifyContent = 'center';
+resolutionSettingsModal.style.alignItems = 'center';
 
     const closeIcon = document.createElement('button');
     closeIcon.textContent = '✖';
@@ -287,6 +339,7 @@ mainMenu.appendChild(DSLogo);
     menuButtonsCon.style.alignItems = 'center';
     menuButtonsCon.style.display = 'flex';
     mainMenu.appendChild(menuButtonsCon);
+
 
         const settingsButton = document.createElement('button');
     settingsButton.style.fontSize = '20px';
@@ -351,7 +404,7 @@ settingsButton.appendChild(settingsImage);
     ModsButton.style.cursor = 'pointer';
 
     ModsButton.addEventListener('mouseover', function() {
-    ModsButton.style.outline = '2px solid rgb(255, 255, 255)';
+    ModsButton.style.outline = '2x solid rgb(255, 255, 255)';
     });
 
     ModsButton.addEventListener('mouseout', function() {
@@ -390,7 +443,7 @@ CosmeticsImage.style.opacity = '0.6';
 CosmeticsImage.style.position = 'absolute';
 CosmeticsImage.style.top = '58%';
 CosmeticsImage.style.left = '50%';
-CosmeticsImage.style.transform = 'translate(-50%, -50%)'; // Center the image exactly
+CosmeticsImage.style.transform = 'translate(-50%, -50%)';
 
 CosmeticsButton.appendChild(CosmeticsImage);
 
@@ -405,7 +458,7 @@ CosmeticsButton.addEventListener('mouseout', function() {
 });
 
 CosmeticsButton.addEventListener('click', function() {
-        Cosmetics.style.display = 'block';
+
 });
     menuButtonsCon.appendChild(CosmeticsButton);
 
@@ -506,7 +559,7 @@ function createSelectedItemBox() {
     selectedItemBox.style.transformX = 'translateX(-28%)';
     selectedItemBox.style.width = '400px';
     selectedItemBox.style.height = '70px';
-    selectedItemBox.style.zIndex = '9999';
+    selectedItemBox.style.zIndex = '0';
     selectedItemBox.style.overflow = 'hidden';
     selectedItemBox.style.display = 'flex';
     selectedItemBox.style.alignItems = 'center';
@@ -547,6 +600,7 @@ document.addEventListener('mouseup', () => isMoving = false);
                 if (selectedItem) {
                     const clonedItem = selectedItem.cloneNode(true);
                     clonedItem.removeAttribute('id');
+                    clonedItem.style.zIndex = '0';
                     clonedItem.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
 
                     const itemImage = clonedItem.querySelector('.BlockItemWrapper img');
@@ -555,6 +609,7 @@ document.addEventListener('mouseup', () => isMoving = false);
                         itemImage.style.maxHeight = '100%';
                         itemImage.style.display = 'block';
                         itemImage.style.margin = 'auto';
+                        itemImage.style.zIndex = '0';
                     }
 
                     selectedItemBox.appendChild(clonedItem);
@@ -643,7 +698,7 @@ toggleshiftSettingsButton.style.width = '40px';
 toggleshiftSettingsButton.style.height = '40px';
 toggleshiftSettingsButton.style.cursor = 'pointer';
 toggleshiftSettingsButton.addEventListener('click', function() {
-    toggleshiftSettingsModal.style.display = 'block';
+    toggleshiftSettingsModal.style.display = 'flex';
 });
 toggleshiftButtonContainer.appendChild(toggleshiftSettingsButton);
 
@@ -740,75 +795,77 @@ setInterval(() => {
 
     row1.appendChild(crosshairBox);
 
-        const cpsBox = document.createElement('div');
-    cpsBox.style.width = '170px';
-    cpsBox.style.height = '170px';
-    cpsBox.style.backgroundColor = 'rgb(50, 50, 50)';
-    cpsBox.style.display = 'flex';
-    cpsBox.style.border = '2px solid rgb(60, 60, 60)';
-    cpsBox.style.flexDirection = 'column';
-    cpsBox.style.justifyContent = 'space-between';
-    cpsBox.style.alignItems = 'center';
-    cpsBox.style.padding = '10px';
-    cpsBox.style.borderRadius = '10px';
+const cpsBox = document.createElement('div');
+cpsBox.style.width = '170px';
+cpsBox.style.height = '170px';
+cpsBox.style.backgroundColor = 'rgb(50, 50, 50)';
+cpsBox.style.display = 'flex';
+cpsBox.style.border = '2px solid rgb(60, 60, 60)';
+cpsBox.style.flexDirection = 'column';
+cpsBox.style.justifyContent = 'space-between';
+cpsBox.style.alignItems = 'center';
+cpsBox.style.padding = '10px';
+cpsBox.style.borderRadius = '10px';
 
-    const cpsText = document.createElement('span');
-    cpsText.textContent = 'CPS COUNTER';
-    cpsBox.appendChild(cpsText);
+const cpsText = document.createElement('span');
+cpsText.textContent = 'CPS COUNTER';
+cpsBox.appendChild(cpsText);
 
-    const cpsButtonContainer = document.createElement('div');
-    cpsButtonContainer.style.display = 'flex';
-    cpsButtonContainer.style.justifyContent = 'space-between';
-    cpsButtonContainer.style.width = '100%';
+const cpsButtonContainer = document.createElement('div');
+cpsButtonContainer.style.display = 'flex';
+cpsButtonContainer.style.justifyContent = 'space-between';
+cpsButtonContainer.style.width = '100%';
 
-    const cpsToggleButton = document.createElement('button');
-    cpsToggleButton.textContent = 'Disabled';
-    cpsToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
-    cpsToggleButton.style.borderRadius = '10px';
-    cpsToggleButton.style.border = 'none';
-    cpsToggleButton.style.color = 'white';
-    cpsToggleButton.style.width = '160px';
-    cpsToggleButton.style.height = '40px';
-    cpsToggleButton.style.fontSize = '18px';
-    cpsToggleButton.style.cursor = 'pointer';
+const cpsToggleButton = document.createElement('button');
+cpsToggleButton.textContent = 'Disabled';
+cpsToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
+cpsToggleButton.style.borderRadius = '10px';
+cpsToggleButton.style.border = 'none';
+cpsToggleButton.style.color = 'white';
+cpsToggleButton.style.width = '160px';
+cpsToggleButton.style.height = '40px';
+cpsToggleButton.style.fontSize = '18px';
+cpsToggleButton.style.cursor = 'pointer';
+
 let cpsCounter;
 function createCPSCounter() {
     cpsCounter = document.createElement('div');
     cpsCounter.style.position = 'fixed';
     cpsCounter.style.top = '96%';
-    cpsCounter.style.left = '96%';
+    cpsCounter.style.left = '94.5%';
     cpsCounter.style.padding = '5px 10px';
     cpsCounter.style.backgroundColor = '#00000066';
     cpsCounter.style.color = 'white';
     cpsCounter.style.fontSize = '16px';
     cpsCounter.style.zIndex = '1000';
-    cpsCounter.innerText = 'CPS: 0';
+    cpsCounter.innerText = 'CPS: 0 | 0';
     cpsCounter.style.cursor = 'pointer';
     mainHud.appendChild(cpsCounter);
 
-let isMoving = false;
-let OffsetCX = 0;
-let OffsetCY = 0;
+    let isMoving = false;
+    let OffsetCX = 0;
+    let OffsetCY = 0;
 
-cpsCounter.addEventListener('mousedown', (e) => {
-    if (cpsToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && e.target.nodeName !== 'INPUT') {
-        isMoving = true;
-        OffsetCX = e.clientX;
-        OffsetCY = e.clientY;
-    }
-});
+    cpsCounter.addEventListener('mousedown', (e) => {
+        if (cpsToggleButton.textContent === 'Enabled' && EditHud.style.display === 'flex' && e.target.nodeName !== 'INPUT') {
+            isMoving = true;
+            OffsetCX = e.clientX;
+            OffsetCY = e.clientY;
+        }
+    });
 
-document.addEventListener('mousemove', (e) => {
-    if (cpsToggleButton.textContent === 'Enabled' && isMoving) {
-        cpsCounter.style.left = `${e.clientX}px`;
-        cpsCounter.style.top = `${e.clientY}px`;
-    }
-});
+    document.addEventListener('mousemove', (e) => {
+        if (cpsToggleButton.textContent === 'Enabled' && isMoving) {
+            cpsCounter.style.left = `${e.clientX}px`;
+            cpsCounter.style.top = `${e.clientY}px`;
+        }
+    });
 
-document.addEventListener('mouseup', () => isMoving = false);
+    document.addEventListener('mouseup', () => isMoving = false);
 }
 
-let clickTimes = [];
+let leftClickTimes = [];
+let rightClickTimes = [];
 let cpsInterval = null;
 let clickListener = null;
 
@@ -817,26 +874,33 @@ cpsToggleButton.addEventListener('click', function() {
         cpsToggleButton.textContent = 'Enabled';
         createCPSCounter();
 
-        function countClick() {
-            var currentTime = new Date().getTime();
-            clickTimes.push(currentTime);
+        function countClick(event) {
+            const currentTime = new Date().getTime();
+            if (event.button === 0) {
+                leftClickTimes.push(currentTime);
+            } else if (event.button === 2) {
+                rightClickTimes.push(currentTime);
+            }
             updateCPS();
         }
 
         function updateCPS() {
-            var currentTime = new Date().getTime();
-            var oneSecondAgo = currentTime - 1000;
+            const currentTime = new Date().getTime();
+            const oneSecondAgo = currentTime - 1000;
 
-            clickTimes = clickTimes.filter(time => time >= oneSecondAgo);
+            leftClickTimes = leftClickTimes.filter(time => time >= oneSecondAgo);
+            rightClickTimes = rightClickTimes.filter(time => time >= oneSecondAgo);
 
-            cpsCounter.innerText = 'CPS: ' + clickTimes.length;
+            cpsCounter.innerText = `CPS: ${leftClickTimes.length} | ${rightClickTimes.length}`;
         }
 
-        clickListener = function() {
-            countClick();
+        clickListener = function(event) {
+            if (event.button === 0 || event.button === 2) {
+                countClick(event);
+            }
         };
 
-        document.addEventListener('click', clickListener);
+        document.addEventListener('mousedown', clickListener);
 
         cpsInterval = setInterval(updateCPS, 1000);
 
@@ -848,22 +912,23 @@ cpsToggleButton.addEventListener('click', function() {
             cpsInterval = null;
         }
         if (clickListener) {
-            document.removeEventListener('click', clickListener);
+            document.removeEventListener('mousedown', clickListener);
             clickListener = null;
         }
         if (cpsCounter) {
             cpsCounter.remove();
             cpsCounter = null;
         }
-        clickTimes = [];
+        leftClickTimes = [];
+        rightClickTimes = [];
     }
 });
 
+cpsBox.appendChild(cpsToggleButton);
+
+row2.appendChild(cpsBox);
 
 
-    cpsBox.appendChild(cpsToggleButton);
-
-    row2.appendChild(cpsBox);
 
 const pingBox = document.createElement('div');
 pingBox.style.width = '170px';
@@ -882,7 +947,7 @@ pingText.textContent = 'PING COUNTER';
 pingBox.appendChild(pingText);
 
 const pingToggleButton = document.createElement('button');
-pingToggleButton.textContent = 'Disabled'; // Start as disabled
+pingToggleButton.textContent = 'Disabled';
 pingToggleButton.style.backgroundColor = 'rgb(40, 40, 40)';
 pingToggleButton.style.borderRadius = '10px';
 pingToggleButton.style.border = 'none';
@@ -892,42 +957,38 @@ pingToggleButton.style.height = '40px';
 pingToggleButton.style.fontSize = '18px';
 pingToggleButton.style.cursor = 'pointer';
 
-// Initialize pinging state
-let isPinging = false; // Variable to track pinging status
-let pingInterval; // Variable to store the interval ID
+let isPinging = false;
+let pingInterval;
 
 pingToggleButton.addEventListener('click', () => {
-    isPinging = !isPinging; // Toggle pinging state
+    isPinging = !isPinging;
 
     if (isPinging) {
         pingToggleButton.textContent = 'Enabled';
-        pingCounter.startPinging(1500); // Start pinging every 1.5 seconds
-        pingCounter.pingTimeDisplay.style.display = 'block'; // Show ping time display
+        pingCounter.startPinging(1500);
+        pingCounter.pingTimeDisplay.style.display = 'block';
     } else {
         pingToggleButton.textContent = 'Disabled';
-        clearInterval(pingInterval); // Stop pinging
-        pingCounter.pingTimeDisplay.style.display = 'none'; // Hide ping time display
+        clearInterval(pingInterval);
+        pingCounter.pingTimeDisplay.style.display = 'none';
     }
 });
-pingBox.appendChild(pingToggleButton); // Add the toggle button to the container
-row2.appendChild(pingBox); // Assuming row2 is defined elsewhere
+pingBox.appendChild(pingToggleButton);
+row2.appendChild(pingBox);
 
 class PingCounter {
     constructor(url) {
-        // Store variables as local constants
-        this.pingCount = 0; // Change from const to this to access in methods
+        this.pingCount = 0;
         this.url = url;
 
-        // Create an element to display ping time
         this.pingTimeDisplay = document.createElement('div');
         this.pingTimeDisplay.id = 'pingTimeDisplay';
         this.pingTimeDisplay.innerText = 'Ping : ';
         this.pingTimeDisplay.style.display = 'none'; // Hide by default
-
-        // Style the ping time display
+        this.pingTimeDisplay.style.cursor = 'pointer';
         this.pingTimeDisplay.style.position = 'fixed';
         this.pingTimeDisplay.style.top = '96%';
-        this.pingTimeDisplay.style.left = '89%';
+        this.pingTimeDisplay.style.left = '87.3%';
         this.pingTimeDisplay.style.padding = '5px 10px';
         this.pingTimeDisplay.style.backgroundColor = '#00000066' ;
         this.pingTimeDisplay.style.color = 'white';
@@ -935,6 +996,28 @@ class PingCounter {
         this.pingTimeDisplay.style.zIndex = '1000';
 
         mainHud.appendChild(this.pingTimeDisplay);
+
+ let isMoving = false;
+let OffsetPX = 0;
+let OffsetPY = 0;
+
+        this.pingTimeDisplay.addEventListener('mousedown', (e) => {
+    if (pingToggleButton.textContent === 'Enabled'&& EditHud.style.display === 'flex' && e.target.nodeName !== 'INPUT') {
+        isMoving = true;
+        OffsetPX = e.clientX;
+        OffsetPX = e.clientY;
+    }
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (pingToggleButton.textContent === 'Enabled' && isMoving) {
+        this.pingTimeDisplay.style.left = `${e.clientX}px`;
+        this.pingTimeDisplay.style.top = `${e.clientY}px`;
+    }
+});
+
+document.addEventListener('mouseup', () => isMoving = false);
+
     }
 
     ping() {
@@ -944,7 +1027,6 @@ class PingCounter {
                 const end = new Date().getTime();
                 const pingTime = end - start;
 
-                // Update ping time on screen
                 this.pingTimeDisplay.innerText = `Ping : ${pingTime} ms`;
                 this.pingCount++;
             })
@@ -953,14 +1035,12 @@ class PingCounter {
             });
     }
 
-    // Start pinging
     startPinging(interval) {
-        this.ping(); // Initial ping
-        pingInterval = setInterval(() => this.ping(), interval); // Repeat pinging
+        this.ping();
+        pingInterval = setInterval(() => this.ping(), interval);
     }
 }
 
-// Initialize PingCounter
 const pingCounter = new PingCounter('https://bloxd.io');
 
 
@@ -1079,6 +1159,28 @@ if (isHandItemBoxEnabled) {
     setInterval(updateHandItems, 1000);
 }
 
+    let messageSent = false;
+    const sendMessageToChat = (msg) => {
+        const chat = document.querySelector(".ChatMessages");
+        if (chat) {
+            const div = document.createElement("div");
+            div.className = "MessageWrapper";
+            div.innerHTML = `<div class="TextFromServer undefined"><div class="IndividualText undefined cyan-text">${msg}</div></div>`;
+            chat.appendChild(div);
+        }
+    };
+
+    const updateGameStatus = () => {
+        const inMenu = document.querySelector('.Title.FullyFancyText');
+        if (!inMenu && !messageSent) {
+            sendMessageToChat("Welcome To Deep Space Client");
+            messageSent = true;
+        } else if (inMenu) {
+            messageSent = false;
+        }
+    };
+
+
     const cinematicBox = document.createElement('div');
 cinematicBox.style.width = '170px';
 cinematicBox.style.height = '170px';
@@ -1117,14 +1219,26 @@ cinematicBox.appendChild(cinematicToggleButton);
 row2.appendChild(cinematicBox);
 
 
-document.addEventListener('keydown', function(event) {
-    var key = event.key;
-    var wholeAppWrapper = document.querySelector('.WholeAppWrapper');
-    if (cinematicToggleButton.textContent === 'Enabled' && (key === 'h' || key === 'H')) {
-        wholeAppWrapper.style.visibility = wholeAppWrapper.style.visibility === 'hidden' ? 'visible' : 'hidden';
+    document.addEventListener('keydown', function(event) {
+        const inMenu = document.querySelector('.Title.FullyFancyText');
+        if (inMenu) return;
+
+        const key = event.key;
+        const wholeAppWrapper = document.querySelector('.WholeAppWrapper');
+
+        if (cinematicToggleButton && cinematicToggleButton.textContent === 'Enabled' && (key === 'h' || key === 'H')) {
+            wholeAppWrapper.style.visibility = wholeAppWrapper.style.visibility === 'hidden' ? 'visible' : 'hidden';
             mainHud.style.visibility = mainHud.style.visibility === 'hidden' ? 'visible' : 'hidden';
-    }
-});
+        }
+    });
+
+
+    setInterval(updateGameStatus, 2000);
+    updateGameStatus();
+
+    const style = document.createElement("style");
+    style.textContent = `.cyan-text { color: rgb(0, 255, 255) !important; }`;
+    document.head.appendChild(style);
 
 const keystrokeBox = document.createElement('div');
 keystrokeBox.style.width = '170px';
@@ -1223,9 +1337,11 @@ const createKeyElement = ({ key, top, left, width = '50px', height = '50px', fon
         zIndex: '10000',
         fontWeight: 'bold',
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        transition: 'all 0.15s ease-in-out',
         fontSize,
         height,
         width,
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
         textAlign: 'center',
         lineHeight: height
     });
@@ -1321,7 +1437,7 @@ document.addEventListener('mouseup', ({ button }) => {
     hotbarSettingsButton.style.height = '40px';
     hotbarSettingsButton.style.cursor = 'pointer';
     hotbarSettingsButton.addEventListener('click', function() {
-        hotbarSettingsModal.style.display = 'block';
+        hotbarSettingsModal.style.display = 'flex';
     });
     hotbarBox.appendChild(hotbarSettingsButton);
 
@@ -1338,8 +1454,6 @@ document.addEventListener('mouseup', ({ button }) => {
     resolutionBox.style.alignItems = 'center';
     resolutionBox.style.padding = '10px';
     resolutionBox.style.borderRadius = '10px';
-
-
 
     const resolutionText = document.createElement('span');
     resolutionText.textContent = 'RESOLUTION';
@@ -1385,7 +1499,7 @@ document.addEventListener('mouseup', ({ button }) => {
     resolutionSettingsButton.style.height = '40px';
     resolutionSettingsButton.style.cursor = 'pointer';
     resolutionSettingsButton.addEventListener('click', function() {
-       resolutionSettingsModal.style.display = 'block';
+       resolutionSettingsModal.style.display = 'flex';
     });
     resolutionButtonContainer.appendChild(resolutionSettingsButton);
 
@@ -1394,31 +1508,33 @@ document.addEventListener('mouseup', ({ button }) => {
     row3.appendChild(resolutionBox);
 
     resolutionSettingsModal.innerHTML = `
+          <div style=" width: 400px; height: 200px;">
         <label>RESOLUTION ADJUSTER</label>
         <button id="closeResolutionSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
-        <br>
-        <input type="range" id="resolutionSlider" min="0.1" max="1.0" step="0.1" value="1.0" style="width: 30%;">
+            <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
+            <label style="margin-bottom: 5px; font-weight: 700;">ADJUST THE RESOLUTION</label>
+            <label style="margin-bottom: 5px; font-size :13px;">The lower the resolution, the higher the FPS.</label>
+        <input type="range" id="resolutionSlider" min="0.1" max="1.0" step="0.1" value="1.0" style=" width: 70%; appearance: none; height: 10px; background: linear-gradient(to right, #007bff  100%, #323232 0%); border-radius: 5px; outline: none; cursor: pointer; transition: background 0.3s ease;">
+        <div>
         <label id="resolutionValueLabel">Resolution: 1.0x</label>
+         </div>
+        </div>
     `;
 
 
-    Cosmetics.innerHTML = `
-            <label>COSMETICS</label>
-    <button id="closeCosmetics" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
-    <p style="color:red; font-weight:900;font-size:15px;">COMING SOON<p>
-    `;
 
 hotbarSettingsModal.innerHTML = `
+          <div style=" width: 400px; height: 200px;">
     <label>HOTBAR</label>
     <button id="closeHotbarSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
-    <div>
-        <label for="colorPicker1">Item:</label>
-        <input type="color" id="colorPicker1" name="colorPicker1" value="#0000000">
-
+<div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
+  <label style="margin-bottom: 5px; font-weight: 700;">CUSTOMIZE HOTBAR</label>
+         <label style="margin-bottom: 5px;">Set hotbar and selected hotbar color</label>
+        <label for="colorPicker1">Hotbar:</label>
+        <input type="color" id="colorPicker1" name="colorPicker1" value="#0000000" style="background: rgb(50, 50, 50); cursor: pointer; border: none; height: 30px;">
+        <label for="colorPicker2">Selected hotbar :</label>
+  <input type="color" id="colorPicker2" name="colorPicker2" value="#ffffff" style="background: rgb(50, 50, 50); cursor: pointer; border: none; height: 30px;">
     </div>
-    <div>
-        <label for="colorPicker2">Selected item :</label>
-        <input type="color" id="colorPicker2" name="colorPicker2" value="#ffffff">
     </div>
 `;
 
@@ -1427,13 +1543,15 @@ hotbarSettingsModal.innerHTML = `
     <button id="CommitChanges" style=" background: rgba(40, 40, 40, 0.97) ; width:300px; height :60px; border: 2px solid rgba(50, 50, 50, 0.97); outline :2px solid rgb(30,30,30); border-radius :10px; color: white; cursor: pointer; font-size :15px; font-weight:bolder;">COMMIT CHANGES</button>
     `;
 
-             toggleshiftSettingsModal.innerHTML = `
+            toggleshiftSettingsModal.innerHTML = `
+      <div style=" width: 400px; height: 200px;">
     <label>TOGGLE SPRINT</label>
     <button id="closetoggleshiftSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
     <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
-    <label style="margin-bottom: 10px; font-weight: 700;">TOGGLE KEY</label>
+    <label style="margin-bottom: 5px; font-weight: 700;">TOGGLE KEY</label>
     <label style="margin-bottom: 5px;">Set toggle key for toggle Sprint</label>
-        <input type="text" id="customSprintKey" style="width: 75px; text-align: center; margin-bottom: 10px;" readonly>
+        <input type="text" id="customSprintKey" value="SET KEY" style="height:30px; width: 100px; text-align: center; font-weight: bolder; margin-bottom: 10px; background: rgb(40, 40, 40); border:none; color:white; border-radius: 5px; cursor: pointer;" readonly>
+    </div>
     </div>
         `;
 
@@ -1445,7 +1563,7 @@ hotbarSettingsModal.innerHTML = `
         <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
 <label style="margin-bottom: 10px; font-weight: 700;">TOGGLE KEY</label>
         <label for="customKey" style="margin-bottom: 5px;">Set toggle key for the client menu:</label>
-        <input type="text" id="customKey" style="width: 75px; text-align: center; margin-bottom: 10px;" readonly>
+        <input type="text" id="customKey" value="SET KEY" style="height:30px; width: 100px; text-align: center; font-weight: bolder; margin-bottom: 10px; background: rgb(40, 40, 40); border:none; color:white; border-radius: 5px;" readonly>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
         <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >DEEP SPACE CONTROLS</label>
@@ -1457,12 +1575,12 @@ hotbarSettingsModal.innerHTML = `
          <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
         <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >CURRENT VERSION</label>
-        <label>Version : 1.1 </label>
+        <label>Version : 1.2 </label>
         <button id="UpdateButton" style="margin-top: 80px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Update</button>
         </div>
         </div>
     `;
-;
+
 crosshairSettingsModal.innerHTML = `
     <label>CROSSHAIR</label>
     <button id="closeCrosshairSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
@@ -1509,7 +1627,7 @@ crosshairSettingsModal.innerHTML = `
  <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 15px;">
        <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
         <label>CROSSHAIR</label>
-        <img src="https://piskel-imgstore-b.appspot.com/img/d46740e1-4a92-11ef-9ed7-5b4c5fd8c3dd.gif" style="width: 115px; height: 115px;">
+        <img src="https://piskel-imgstore-b.appspot.com/img/0204821c-aa6a-11ef-84c4-2725c76428b0.gif" style="width: 115px; height: 115px;">
         <button id="option7Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
            <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
@@ -1517,9 +1635,13 @@ crosshairSettingsModal.innerHTML = `
         <img src="https://piskel-imgstore-b.appspot.com/img/42579dc0-99cd-11ef-808f-0b01a4cf3689.gif" style="width: 115px; height: 115px;">
         <button id="option8Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
     </div>
+               <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
+        <label>CROSSHAIR</label>
+        <img src="https://piskel-imgstore-b.appspot.com/img/e0a03de8-c2b3-11ef-95f7-c14fa4ed6efb.gif" style="width: 115px; height: 115px;">
+        <button id="option9Button" style="width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enable</button>
+    </div>
     </div>
 `;
-
 
 document.getElementById('option1Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/354b6bd7-1cd8-11ef-8822-bbb60d940ece.gif';
@@ -1541,10 +1663,13 @@ document.getElementById('option3Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3f1093ca-4a8d-11ef-92cc-5b4c5fd8c3dd.gif';
 })
                 document.getElementById('option7Button').addEventListener('click', function() {
-    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/3ed96675-4a93-11ef-9811-5b4c5fd8c3dd.gif';
+    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/588a83cc-aa68-11ef-869b-2725c76428b0.gif';
 })
                     document.getElementById('option8Button').addEventListener('click', function() {
     crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/e5874b87-99cc-11ef-a284-0b01a4cf3689.gif';
+})
+                        document.getElementById('option9Button').addEventListener('click', function() {
+    crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/643da997-c382-11ef-a652-398c3ca0dc0d.gif';
 })
 
 
@@ -1568,7 +1693,7 @@ document.getElementById('colorPicker2').addEventListener('input', function() {
 });
 
                     document.getElementById('UpdateButton').addEventListener('click', function() {
-     window.open('https://georgecr0.github.io/DeepSpaceClient/index.html', '_blank');
+     window.open('https://greasyfork.org/en/scripts/489428-deep-space-client', '_blank');
 })
 
 
@@ -1577,42 +1702,35 @@ document.getElementById('colorPicker2').addEventListener('input', function() {
 
     let resolutionScale = 1.0;
 
-    // Function to adjust the canvas resolution
     function adjustCanvasResolution(scale) {
         const canvas = document.querySelector('canvas');
         if (!canvas) return;
 
-        // Set the resolution scale based on the slider value
         resolutionScale = scale;
 
-        // Adjust the internal resolution of the canvas
         const originalWidth = canvas.offsetWidth;
         const originalHeight = canvas.offsetHeight;
 
-        // Set the canvas width and height based on the scale
         canvas.width = originalWidth * resolutionScale;
         canvas.height = originalHeight * resolutionScale;
 
-        // Adjust the scaling in the rendering context to fit the new resolution
         const ctx = canvas.getContext('2d');
         if (ctx) {
             ctx.setTransform(resolutionScale, 0, 0, resolutionScale, 0, 0);
         }
     }
 
-    // Get references to the resolution slider and resolution value label
     const resolutionSlider = document.getElementById('resolutionSlider');
     const resolutionValueLabel = document.getElementById('resolutionValueLabel');
 
-    // Event listener for the resolution slider
     resolutionSlider.addEventListener('input', function() {
-        // Update the resolution scale based on the slider value
         const scaleValue = parseFloat(resolutionSlider.value);
         adjustCanvasResolution(scaleValue);
 
-        // Update the resolution value label
         resolutionValueLabel.textContent = `Resolution: ${scaleValue.toFixed(1)}x`;
     });
+
+
 
 let toggleKey = 'ShiftRight';
 let boxVisible = false;
@@ -1626,35 +1744,21 @@ document.addEventListener('keydown', function(event) {
         isSettingKey = false;
     } else if (event.code === toggleKey) {
         boxVisible = !boxVisible;
-
         mainBox.style.display = boxVisible ? 'none' : 'none';
-        Cosmetics.style.display = boxVisible ? 'none' : 'none';
         mainMenu.style.display = boxVisible ? 'flex' : 'none';
         settingsModal.style.display = boxVisible ? 'none' : 'none';
         crosshairSettingsModal.style.display = boxVisible ? 'none' : 'none';
         toggleshiftSettingsModal.style.display = boxVisible ? 'none' : 'none';
         resolutionSettingsModal.style.display = boxVisible ? 'none' : 'none';
         hotbarSettingsModal.style.display = boxVisible ? 'none' : 'none';
-        if (boxVisible) {
-            if (document.pointerLockElement) {
-                document.exitPointerLock();
-            }
-        } else {
-            const canvas = document.querySelector('canvas');
-            if (canvas) {
-                canvas.requestPointerLock();
-            }
+
+        if (boxVisible && document.pointerLockElement) {
+            document.exitPointerLock();
         }
     }
 });
 
-document.addEventListener('pointerlockchange', () => {
-    if (document.pointerLockElement) {
-        console.log("Pointer locked to game");
-    } else {
-        console.log("Pointer unlocked from game");
-    }
-});
+
 
      document.getElementById('CommitChanges').addEventListener('click', function() {
         EditHud.style.display = 'none';
@@ -1666,7 +1770,7 @@ document.addEventListener('pointerlockchange', () => {
 customSprintKeyInput.addEventListener('keydown', (e) => {
     e.preventDefault();
     togglesprintKey = e.code;
-    customSprintKeyInput.value = e.key.toUpperCase();
+    customSprintKeyInput.value = e.code;
 });
         document.getElementById('customSprintKey').addEventListener('click', function() {
         this.value = 'PRESS A KEY';
@@ -1679,10 +1783,6 @@ settingsButton.addEventListener('click', function() {
     closeIcon.addEventListener('click', function() {
     mainBox.style.display = 'none';
 });
-
-    document.getElementById('closeCosmetics').addEventListener('click', function() {
-        Cosmetics.style.display = 'none';
-    });
 
               document.getElementById('closeResolutionSettings').addEventListener('click', function() {
         resolutionSettingsModal.style.display = 'none';

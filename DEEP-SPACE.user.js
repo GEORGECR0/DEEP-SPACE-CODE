@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Deep Space Client
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.3.1
 // @description  Deep Space Client for bloxd.io
 // @author       GEORGECR
 // @match        https://bloxd.io/
@@ -113,7 +113,7 @@
             document.querySelectorAll('.' + className).forEach(el => el.remove());
         });
 
-        ['GameAdsBanner', 'HomeBannerInner' , 'ShopBannerDiv' , 'SettingsAdOuter' , 'InventoryAdInner'].forEach(className => {
+        ['GameAdsBanner', 'HomeBannerInner' , 'ShopBannerDiv' , 'SettingsAdOuter' , 'InventoryAdInner' , 'RespawnLeaderboardBannerDivInner' , 'RespawnSideSquareBannerDiv'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(ads => {
                 ads.style.opacity = '0';
                 ads.style.transform = 'translateX(100%)';
@@ -562,12 +562,14 @@
             modBoxItems.forEach((modBoxItem) => {
                 modBoxItem.style.display = 'flex';
             });
-        }
-        else if (name === 'New') {
-            const newModBoxItem = modBoxItems[9];
-            if (newModBoxItem) {
-                newModBoxItem.style.display = 'flex';
-            }
+        } else if (name === 'New') {
+            const newModBoxItems = [9, 4];
+            newModBoxItems.forEach((id) => {
+                const modBoxItem = modBoxItems[id];
+                if (modBoxItem) {
+                    modBoxItem.style.display = 'flex';
+                }
+            });
         } else if (name === 'HUD') {
             const hudItems = [0, 3, 4, 5, 7];
             hudItems.forEach((id) => {
@@ -577,6 +579,7 @@
                 }
             });
         }
+
     }
 
     const ArmorViewButton = document.createElement('button');
@@ -1388,19 +1391,20 @@
     resolutionButtonContainer.appendChild(resolutionSettingsButton);
     modContainer.children[9].appendChild(resolutionButtonContainer);
 
-    resolutionSettingsModal.innerHTML = `
-          <div style=" width: 400px; height: 200px;">
-        <label>RESOLUTION ADJUSTER</label>
-        <button id="closeResolutionSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
-            <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
-            <label style="margin-bottom: 5px; font-weight: 700;">ADJUST THE RESOLUTION</label>
-            <label style="margin-bottom: 5px; font-size :13px;">The lower the resolution, the higher the FPS.</label>
-        <input type="range" id="resolutionSlider" min="0.1" max="1.0" step="0.1" value="1.0" style=" width: 70%; appearance: none; height: 10px; background: linear-gradient(to right, #007bff  100%, #323232 0%); border-radius: 5px; outline: none; cursor: pointer; transition: background 0.3s ease;">
+resolutionSettingsModal.innerHTML = `
+<div style="width: 400px; height: 200px;">
+    <label>RESOLUTION ADJUSTER</label>
+    <button id="closeResolutionSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+    <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
+        <label style="margin-bottom: 5px; font-weight: 700;">ADJUST THE RESOLUTION</label>
+        <label style="margin-bottom: 5px; font-size: 13px;">The lower the resolution, the higher the FPS.</label>
+        <input type="range" id="resolutionSlider" min="0.05" max="1.0" step="0.05" value="1.0" style="width: 70%; appearance: none; height: 10px; background: linear-gradient(to right, #007bff 100%, #323232 0%); border-radius: 5px; outline: none; cursor: pointer; transition: background 0.3s ease;">
         <div>
-        <label id="resolutionValueLabel">Resolution: 1.0x</label>
-         </div>
+            <label id="resolutionValueLabel">Resolution: 1.00x</label>
         </div>
-    `;
+    </div>
+</div>
+`;
     hotbarSettingsModal.innerHTML = `
           <div style=" width: 400px; height: 200px;">
     <label>HOTBAR</label>
@@ -1449,7 +1453,7 @@
          <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
         <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >CURRENT VERSION</label>
-        <label>Version : 1.3 </label>
+        <label>Version : 1.3.1 </label>
         <button id="UpdateButton" style="margin-top: 80px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Update</button>
         </div>
          <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
@@ -1593,37 +1597,43 @@
         window.open('https://greasyfork.org/en/scripts/489428-deep-space-client', '_blank');
     })
 
-    const zoomSlider = document.getElementById('zoomSlider');
-    const zoomValueLabel = document.getElementById('zoomValueLabel');
+let canvasWidth, canvasHeight, isResolutionVisible = false, resolutionSliderContainer;
+function init() {
+    const canvas = document.getElementById('noa-canvas');
+    if (canvas) {
+        canvasWidth = canvas.width;
+        canvasHeight = canvas.height;
+        const resolutionSlider = document.getElementById('resolutionSlider');
+        const resolutionValueLabel = document.getElementById('resolutionValueLabel');
 
-    let resolutionScale = 1.0;
+        resolutionSlider.addEventListener('input', function () {
+            const resolutionValue = (+this.value).toFixed(2);
+            resolutionValueLabel.textContent = `Resolution: ${resolutionValue}x`;
+            canvas.width = canvasWidth * this.value;
+            canvas.height = canvasHeight * this.value;
+        });
 
-    function adjustCanvasResolution(scale) {
-        const canvas = document.querySelector('canvas');
-        if (!canvas) return;
+        const originalRequestPointerLock = Element.prototype.requestPointerLock;
+        Element.prototype.requestPointerLock = function () {
+            if (!isResolutionVisible) originalRequestPointerLock.call(this);
+        };
 
-        resolutionScale = scale;
-
-        const originalWidth = canvas.offsetWidth;
-        const originalHeight = canvas.offsetHeight;
-
-        canvas.width = originalWidth * resolutionScale;
-        canvas.height = originalHeight * resolutionScale;
-
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-            ctx.setTransform(resolutionScale, 0, 0, resolutionScale, 0, 0);
-        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '=' && e.repeat === false) {
+                isResolutionVisible = !isResolutionVisible;
+                resolutionSettingsModal.style.display = isResolutionVisible ? 'block' : 'none';
+                if (document.pointerLockElement) document.exitPointerLock();
+            }
+        });
     }
+}
+const interval = setInterval(() => {
+    if (document.getElementById('noa-canvas')) {
+        clearInterval(interval);
+        init();
+    }
+}, 100);
 
-    const resolutionSlider = document.getElementById('resolutionSlider');
-    const resolutionValueLabel = document.getElementById('resolutionValueLabel');
-    resolutionSlider.addEventListener('input', function() {
-        const scaleValue = parseFloat(resolutionSlider.value);
-        adjustCanvasResolution(scaleValue);
-
-        resolutionValueLabel.textContent = `Resolution: ${scaleValue.toFixed(1)}x`;
-    });
 
     let toggleKey = 'ShiftRight';
     let boxVisible = false;

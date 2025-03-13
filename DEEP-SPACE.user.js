@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Deep Space Client
 // @namespace    http://tampermonkey.net/
-// @version      1.3.1
+// @version      1.3.2
 // @description  Deep Space Client for bloxd.io
 // @author       GEORGECR
 // @match        https://bloxd.io/
@@ -30,10 +30,10 @@
             maintext.style.webkitTextStroke = "0px";
             maintext.textContent = "DEEP SPACE";
             maintext.style.textShadow = "10px 5px 5px #000000";
-
+            maintext.style.fontSize = "60px";
         }
 
-        const background = document.querySelector(".HomeBackground");
+        const background = document.querySelector(".SelectGameGridBackground");
         if (background) {
             background.style.backgroundImage = 'url(https://i.postimg.cc/v8rFjRWq/MAINBACKGROUND.jpg)';
         }
@@ -71,15 +71,23 @@
             });
         });
 
-        ['Inventory' , 'SettingsMenu' , 'InviteLinkBox' , 'ShopBody '].forEach(className => {
+        ['Inventory' , 'SettingsMenu' , 'InviteLinkBox' , 'ShopBody ' , 'CharCustomisation '].forEach(className => {
             document.querySelectorAll('.' + className).forEach(BloxdUIBoxes => {
                 BloxdUIBoxes.style.backgroundColor = 'transparent';
                 BloxdUIBoxes.style.border = "3px solid black";
                 BloxdUIBoxes.style.boxShadow = "none";
-                BloxdUIBoxes.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent background
+                BloxdUIBoxes.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
                 BloxdUIBoxes.style.backdropFilter = `blur(${blur}px)`;
 
             });
+        });
+
+                document.querySelectorAll('.TitleContainer').forEach(TOP => {
+                TOP.style.height = '70px';
+                TOP.style.width = '600px';
+        });
+                document.querySelectorAll('.HomeHeaderRight').forEach(optionsTR => {
+                optionsTR.style.backgroundColor = "rgba(136, 50, 64,0.45)";
         });
 
         document.querySelectorAll('.CreativeItemSlotsSearch').forEach(searchbar => {
@@ -91,7 +99,7 @@
             searchbar.style.borderRadius = "0px";
         });
 
-        ['ShopItem' , 'SelectedItemViewer' , 'SelectedItemImageDiv' , 'SelectedItemHeaderDiv' , 'ShopItemHeaderDiv'].forEach(className => {
+        ['ShopItem' , 'SelectedItemViewer' , 'SelectedItemImageDiv' , 'SelectedItemHeaderDiv' , 'ShopItemHeaderDiv' , 'CharCustomisationBodyHeader' , 'CharCustomPartWrapper'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(SHOPSHIT => {
                 SHOPSHIT.style.backgroundColor = 'transparent';
             });
@@ -122,12 +130,6 @@
             });
         });
 
-
-        ['HeaderRight'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(optionsTR => {
-                optionsTR.style.backgroundColor = "rgba(136, 50, 64,0.45)";
-            });
-        });
         ['PlayerNamePreview'].forEach(className => {
             document.querySelectorAll('.' + className).forEach(optionsTL => {
                 optionsTL.style.backgroundColor = "rgba(136, 50, 64 ,0.45)";
@@ -201,6 +203,7 @@
         hud.style.position = 'fixed';
         hud.style.left = '0px';
         hud.style.top = '0px';
+        hud.style.backgroundColor = 'transparent';
         hud.style.width = '100%';
         hud.style.height = '100%';
         hud.style.display = 'block';
@@ -283,14 +286,14 @@
     crosshairSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
 
     const hotbarSettingsModal = createBox('hotbarSettingsModal', '1002');
-    hotbarSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent background
-    hotbarSettingsModal.style.backdropFilter = 'blur(5px)'; // Blur effect
+    hotbarSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    hotbarSettingsModal.style.backdropFilter = 'blur(5px)';
     hotbarSettingsModal.style.justifyContent = 'center';
     hotbarSettingsModal.style.alignItems = 'center';
 
     const toggleshiftSettingsModal = createBox('toggleshiftSettingsModal', '1002');
-    toggleshiftSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent background
-    toggleshiftSettingsModal.style.backdropFilter = 'blur(5px)'; // Blur effect
+    toggleshiftSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    toggleshiftSettingsModal.style.backdropFilter = 'blur(5px)';
     toggleshiftSettingsModal.style.justifyContent = 'center';
     toggleshiftSettingsModal.style.alignItems = 'center';
 
@@ -301,8 +304,8 @@
     EditHud.style.alignItems = 'center';
 
     const resolutionSettingsModal = createBox('resolutionSettingsModal', '1002');
-    resolutionSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent background
-    resolutionSettingsModal.style.backdropFilter = 'blur(5px)'; // Blur effect
+    resolutionSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    resolutionSettingsModal.style.backdropFilter = 'blur(5px)';
     resolutionSettingsModal.style.justifyContent = 'center';
     resolutionSettingsModal.style.alignItems = 'center';
 
@@ -454,7 +457,7 @@
     buttonsContainer.style.marginTop = '10px';
     buttonsContainer.style.marginLeft = '10px';
 
-    const buttons = ['All', 'New', 'HUD'];
+    const buttons = ['All', 'New', 'Hud'];
     const buttonElements = {};
     buttons.forEach((name) => {
         const button = document.createElement('button');
@@ -486,6 +489,7 @@
     EditHUDButton.addEventListener('click', function() {
         EditHud.style.display = 'flex';
         mainBox.style.display = 'none';
+        mainHud.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
         mainMenu.style.display = 'none';
     });
     buttonsContainer.appendChild(EditHUDButton);
@@ -570,7 +574,7 @@
                     modBoxItem.style.display = 'flex';
                 }
             });
-        } else if (name === 'HUD') {
+        } else if (name === 'Hud') {
             const hudItems = [0, 3, 4, 5, 7];
             hudItems.forEach((id) => {
                 const modBoxItem = modBoxItems[id];
@@ -1453,8 +1457,9 @@ resolutionSettingsModal.innerHTML = `
          <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
         <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >CURRENT VERSION</label>
-        <label>Version : 1.3.1 </label>
-        <button id="UpdateButton" style="margin-top: 80px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Update</button>
+        <label>Version : 1.3.2 </label>
+        <label style="color: cyan ; font-size: 14px;">Patch Update</label>
+        <button id="UpdateButton" style="margin-top: 65px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Update</button>
         </div>
          <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
          <label style="margin-bottom: 10px; font-weight: 700;">GUI CHANGES</label>
@@ -1617,14 +1622,6 @@ function init() {
         Element.prototype.requestPointerLock = function () {
             if (!isResolutionVisible) originalRequestPointerLock.call(this);
         };
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === '=' && e.repeat === false) {
-                isResolutionVisible = !isResolutionVisible;
-                resolutionSettingsModal.style.display = isResolutionVisible ? 'block' : 'none';
-                if (document.pointerLockElement) document.exitPointerLock();
-            }
-        });
     }
 }
 const interval = setInterval(() => {
@@ -1664,6 +1661,7 @@ const interval = setInterval(() => {
         EditHud.style.display = 'none';
         mainMenu.style.display = 'flex';
         mainBox.style.display = 'block';
+        mainHud.style.backgroundColor = 'transparent';
     });
     document.getElementById('closetoggleshiftSettings').addEventListener('click', function() {
         toggleshiftSettingsModal.style.display = 'none';

@@ -1634,7 +1634,7 @@ const interval = setInterval(() => {
 }, 100);
 
 
-    let toggleKey = 'KeyJ';
+    let toggleKey = 'ShiftRight';
     let boxVisible = false;
     let isSettingKey = false;
     document.addEventListener('keydown', function(event) {

@@ -11,6 +11,8 @@
 // @license      MIT
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @downloadURL https://update.greasyfork.org/scripts/489428/Deep%20Space%20Client.user.js
+// @updateURL https://update.greasyfork.org/scripts/489428/Deep%20Space%20Client.meta.js
 // ==/UserScript==
 
 (function() {
@@ -1632,7 +1634,7 @@ const interval = setInterval(() => {
 }, 100);
 
 
-    let toggleKey = 'ShiftRight';
+    let toggleKey = 'KeyJ';
     let boxVisible = false;
     let isSettingKey = false;
     document.addEventListener('keydown', function(event) {

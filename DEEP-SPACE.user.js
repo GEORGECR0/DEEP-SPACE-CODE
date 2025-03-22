@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Deep Space Client
 // @namespace    http://tampermonkey.net/
-// @version      1.3.2
+// @version      1.4
 // @description  Deep Space Client for bloxd.io
 // @author       GEORGECR
-// @match        https://bloxd.io/
+// @match        https://bloxd.io/*
 // @match        https://bloxd.io/?utm_source=pwa
 // @match        https://staging.bloxd.io/
 // @icon         https://i.postimg.cc/NMG91FWH/space-BG-loco.jpg
@@ -19,11 +19,33 @@
     //copyright Deep Space Client
     'use strict';
     let crosshairvalue = GM_getValue("crosshair", "https://piskel-imgstore-b.appspot.com/img/7be1c5f3-9ad1-11ef-b170-45e28d82b1ad.gif");
+    let capesvalue = GM_getValue("capes", "none");
     let CrossSize = '19';
     let colorPicker1Value = GM_getValue("colorPicker1", "#000000");
     let colorPicker2Value = GM_getValue("colorPicker2", "#FFFFFF");
-    let blur = '5';
 
+        function modifyCape() {
+        try {
+            let hotbarContainer = document.querySelector(".HotBarContainer");
+            if (!hotbarContainer) {
+                return;
+            }
+
+            let values = Object.values(hotbarContainer);
+            if (values.length === 0) {
+                return;
+            }
+
+            let stateManager = values[0]?.return?.updateQueue?.lastEffect?.deps?.[2]?.noa?.ents;
+            if (!stateManager) {
+                return;
+            }
+
+            stateManager.getState(1, "cape").chooseCape(capesvalue);
+        } catch (error) {
+        }
+    }
+    setInterval(modifyCape, 1000);
 
     function fast_refresh() {
         document.title = "Bloxd.io - Deep Space Client";
@@ -280,12 +302,19 @@
         return menu;
     };
     const mainMenu = createmenu('toggleMenu', '1000');
+
     const mainBox = createBox('toggleBox', '1001');
+
     const settingsModal = createBox('settingsModal', '1002');
     settingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
 
     const crosshairSettingsModal = createBox('crosshairSettingsModal', '1002');
     crosshairSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
+
+        const capeModal = createBox('hotbarSettingsModal', '1002');
+    capeModal.style.backgroundColor = 'transparent';
+    capeModal.style.justifyContent = 'center';
+    capeModal.style.alignItems = 'center';
 
     const hotbarSettingsModal = createBox('hotbarSettingsModal', '1002');
     hotbarSettingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
@@ -401,6 +430,10 @@
         CosmeticsButton.style.outline = '2px solid rgb(30,30,30)';
     });
     CosmeticsButton.addEventListener('click', function() {
+      capeModal.style.display = 'flex';
+      mainMenu.style.display = 'none'
+      mainHud.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';;
+        mainHud.style.backdropFilter = 'blur(5px)';
     });
     menuButtonsCon.appendChild(CosmeticsButton);
 
@@ -1026,6 +1059,8 @@
             document.dispatchEvent(shiftUp);
         }
     });
+
+
     let messageSent = false;
     const sendMessageToChat = (msg) => {
         const chat = document.querySelector(".ChatMessages");
@@ -1397,6 +1432,36 @@
     resolutionButtonContainer.appendChild(resolutionSettingsButton);
     modContainer.children[9].appendChild(resolutionButtonContainer);
 
+    capeModal.innerHTML = `
+          <div style=" width: 400px; height: 250px;">
+    <label>CAPES</label>
+    <button id="closeCapeSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
+<div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 215px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px;">
+  <label style="margin-bottom: 5px; font-weight: 700;">PICK YOUR CAPE</label>
+  <div style="display: flex; flex-direction: row; align-items: center; width: 370px; height: 100px; gap:15px;">
+    <button id="cape0" style="width: 80px; height: 80px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer; background-image: url('https://i.postimg.cc/HWbRtYwF/ISO-7010-P001-svg.png'); background-size: 40px 40px; background-position: center; background-repeat: no-repeat;">
+  </button>
+  <button id="cape1" style="width: 80px; height: 80px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer; background-image: url('https://i.postimg.cc/ht1dv3dn/Screenshot-2025-03-17-225100.png'); background-size: 40px 65px; background-position: center; background-repeat: no-repeat;">
+  </button>
+    <button id="cape2" style="width: 80px; height: 80px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer; background-image: url('https://i.postimg.cc/hG9z6ZK6/Screenshot-2025-03-17-225109.png'); background-size: 40px 65px; background-position: center; background-repeat: no-repeat;">
+  </button>
+    <button id="cape3" style="width: 80px; height: 80px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer; background-image: url('https://i.postimg.cc/yd0rtHG9/Screenshot-2025-03-17-225116.png'); background-size: 40px 65px; background-position: center; background-repeat: no-repeat;">
+  </button>
+      </div>
+    <div style="display: flex; flex-direction: row; align-items: center; width: 370px; height: 100px; gap:15px; margin-top:15px; margin-bottom:15px;">
+        <button id="cape4" style="width: 80px; height: 80px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer; background-image: url('https://i.postimg.cc/Wz5xjJRr/Screenshot-2025-03-17-231835.png'); background-size: 40px 65px; background-position: center; background-repeat: no-repeat;">
+  </button>
+        <button id="cape5" style="width: 80px; height: 80px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer; background-image: url('https://i.postimg.cc/4xStc25h/Screenshot-2025-03-17-225131.png'); background-size: 40px 65px; background-position: center; background-repeat: no-repeat;">
+  </button>
+          <button id="cape6" style="width: 80px; height: 80px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer; background-image: url('https://i.postimg.cc/rs3gQyG5/Screenshot-2025-03-17-225123.png'); background-size: 40px 65px; background-position: center; background-repeat: no-repeat;">
+  </button>
+          <button id="cape7" style="width: 80px; height: 80px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;background-image: url('https://i.postimg.cc/g04vJc7m/Screenshot-2025-03-17-225145.png'); background-size: 40px 65px; background-position: center; background-repeat: no-repeat;">
+  </button>
+        </div>
+    </div>
+    </div>
+`;
+
 resolutionSettingsModal.innerHTML = `
 <div style="width: 400px; height: 200px;">
     <label>RESOLUTION ADJUSTER</label>
@@ -1459,16 +1524,10 @@ resolutionSettingsModal.innerHTML = `
          <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
         <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >CURRENT VERSION</label>
-        <label>Version : 1.3.2 </label>
-        <label style="color: cyan ; font-size: 14px;">Patch Update</label>
+        <label>Version : 1.4</label>
+        <label style="color: cyan ; font-size: 14px;">Capes</label>
         <button id="UpdateButton" style="margin-top: 65px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Update</button>
         </div>
-         <div style="display: flex; flex-direction: column; align-items: center; width: 385px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
-         <label style="margin-bottom: 10px; font-weight: 700;">GUI CHANGES</label>
-         <label style="margin-bottom: 0px;">Turn off blur if you experience lag</label>
-          <label style="margin-bottom: 0px;">spikes when opening the menu</label>
-          <button id="Blur" style="margin-top: 58px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Enabled</button>
-         </div>
         </div>
     `;
     crosshairSettingsModal.innerHTML = `
@@ -1532,6 +1591,38 @@ resolutionSettingsModal.innerHTML = `
     </div>
     </div>
 `;
+        document.getElementById('cape0').addEventListener('click', function() {
+        capesvalue = 'none';
+        GM_setValue("capes", capesvalue);
+    });
+    document.getElementById('cape1').addEventListener('click', function() {
+        capesvalue = 'super';
+        GM_setValue("capes", capesvalue);
+    });
+    document.getElementById('cape2').addEventListener('click', function() {
+        capesvalue = 'super_inverted';
+        GM_setValue("capes", capesvalue);
+    });
+    document.getElementById('cape3').addEventListener('click', function() {
+        capesvalue = 'youtuber';
+        GM_setValue("capes", capesvalue);
+    });
+    document.getElementById('cape4').addEventListener('click', function() {
+        capesvalue = 'deep_space';
+        GM_setValue("capes", capesvalue);
+    });
+    document.getElementById('cape5').addEventListener('click', function() {
+        capesvalue = 'cow_normal';
+        GM_setValue("capes", capesvalue);
+    });
+    document.getElementById('cape6').addEventListener('click', function() {
+        capesvalue = 'pig';
+        GM_setValue("capes", capesvalue);
+    });
+    document.getElementById('cape7').addEventListener('click', function() {
+        capesvalue = 'sheep';
+        GM_setValue("capes", capesvalue);
+    });
 
     document.getElementById('option1Button').addEventListener('click', function() {
         crosshairvalue = 'https://piskel-imgstore-b.appspot.com/img/7be1c5f3-9ad1-11ef-b170-45e28d82b1ad.gif';
@@ -1573,16 +1664,6 @@ resolutionSettingsModal.innerHTML = `
         CrossSize = parseInt(this.value);
         document.getElementById('sliderValue').textContent = this.value;
     })
-    const BlurBT = document.getElementById('Blur');
-    BlurBT.addEventListener('click', function() {
-        if (BlurBT.textContent === 'Enabled') {
-            blur = '0';
-            BlurBT.textContent = 'Disabled';
-        } else {
-            BlurBT.textContent = 'Enabled';
-            blur = '5';
-        }
-    });
     document.getElementById('colorPicker1').addEventListener('input', function() {
         colorPicker1Value = this.value;
         GM_setValue("colorPicker1", colorPicker1Value);
@@ -1652,6 +1733,9 @@ const interval = setInterval(() => {
             toggleshiftSettingsModal.style.display = boxVisible ? 'none' : 'none';
             resolutionSettingsModal.style.display = boxVisible ? 'none' : 'none';
             hotbarSettingsModal.style.display = boxVisible ? 'none' : 'none';
+            capeModal.style.display = boxVisible ? 'none' : 'none';
+             mainHud.style.backgroundColor = 'transparent';
+             mainHud.style.backdropFilter = 'blur(0px)';
 
             if (boxVisible && document.pointerLockElement) {
                 document.exitPointerLock();
@@ -1687,7 +1771,12 @@ const interval = setInterval(() => {
     document.getElementById('closeResolutionSettings').addEventListener('click', function() {
         resolutionSettingsModal.style.display = 'none';
     });
-
+        document.getElementById('closeCapeSettings').addEventListener('click', function() {
+        capeModal.style.display = 'none';
+        mainMenu.style.display = 'flex';
+        mainHud.style.backgroundColor = 'transparent';
+        mainHud.style.backdropFilter = 'blur(0px)';
+    });
     document.getElementById('customKey').addEventListener('click', function() {
         isSettingKey = true;
         this.value = 'PRESS A KEY';

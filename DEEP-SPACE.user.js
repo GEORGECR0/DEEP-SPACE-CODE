@@ -1699,7 +1699,7 @@
         }
     }, 100);
 
-    let toggleKey = 'F2';
+    let toggleKey = 'ShiftRight';
 
     let boxVisible = false;
     let isSettingKey = false;

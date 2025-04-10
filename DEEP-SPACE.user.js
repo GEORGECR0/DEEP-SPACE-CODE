@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Deep Space Client
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.4.1
 // @description  Deep Space Client for bloxd.io
 // @author       GEORGECR
 // @match        https://bloxd.io/*
@@ -24,7 +24,7 @@
     let colorPicker1Value = GM_getValue("colorPicker1", "#000000");
     let colorPicker2Value = GM_getValue("colorPicker2", "#FFFFFF");
 
-        function modifyCape() {
+    function modifyCape() {
         try {
             let hotbarContainer = document.querySelector(".HotBarContainer");
             if (!hotbarContainer) {
@@ -88,11 +88,8 @@
             slot.style.outline = "transparent";
         });
 
-        ['SocialBarInner'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(socialbox => {
-                socialbox.style.backgroundColor = "rgba(0,0,0,1)";
-                socialbox.style.opacity = '1';
-            });
+        document.querySelectorAll('.LoadingOverlayRight').forEach(EnterDiv => {
+            EnterDiv.style.transform = 'translate(-20% , 25%)';
         });
 
         ['Inventory' , 'SettingsMenu' , 'InviteLinkBox' , 'ShopBody ' , 'CharCustomisation '].forEach(className => {
@@ -106,12 +103,12 @@
             });
         });
 
-                document.querySelectorAll('.TitleContainer').forEach(TOP => {
-                TOP.style.height = '70px';
-                TOP.style.width = '600px';
+        document.querySelectorAll('.TitleContainer').forEach(TOP => {
+            TOP.style.height = '70px';
+            TOP.style.width = '50%';
         });
-                document.querySelectorAll('.HomeHeaderRight').forEach(optionsTR => {
-                optionsTR.style.backgroundColor = "rgba(136, 50, 64,0.45)";
+        document.querySelectorAll('.HomeHeaderRight').forEach(optionsTR => {
+            optionsTR.style.backgroundColor = "rgba(136, 50, 64,0.45)";
         });
 
         document.querySelectorAll('.CreativeItemSlotsSearch').forEach(searchbar => {
@@ -123,19 +120,6 @@
             searchbar.style.borderRadius = "0px";
         });
 
-        ['ShopItem' , 'SelectedItemViewer' , 'SelectedItemImageDiv' , 'SelectedItemHeaderDiv' , 'ShopItemHeaderDiv' , 'CharCustomisationBodyHeader' , 'CharCustomPartWrapper'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(SHOPSHIT => {
-                SHOPSHIT.style.backgroundColor = 'transparent';
-            });
-        });
-        ['SettingsMenuLeft' , 'SettingsSectionTitle' , 'ShopSidebarMenu' , 'SidebarMenuTitle' , 'SidebarMenu'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(settingsMenuL => {
-                settingsMenuL.style.backgroundColor = 'transparent';
-                settingsMenuL.style.border = "none";
-                settingsMenuL.style.textShadow = "none";
-
-            });
-        });
     }
     setInterval(fast_refresh, 70 );
 
@@ -145,7 +129,7 @@
             document.querySelectorAll('.' + className).forEach(el => el.remove());
         });
 
-        ['GameAdsBanner', 'HomeBannerInner' , 'ShopBannerDiv' , 'SettingsAdOuter' , 'InventoryAdInner' , 'RespawnLeaderboardBannerDivInner' , 'RespawnSideSquareBannerDiv'].forEach(className => {
+        ['GameAdsBanner', 'HomeBannerInner' , 'ShopBannerDiv' , 'SettingsAdOuter' , 'InventoryAdInner' , 'RespawnLeaderboardBannerDivInner' , 'RespawnSideSquareBannerDiv' , 'LoadingOverlayLeft ' , 'LoadingOverlayRightAdBannerContainer' , 'LoadingOverlayDividerContainer '].forEach(className => {
             document.querySelectorAll('.' + className).forEach(ads => {
                 ads.style.opacity = '0';
                 ads.style.transform = 'translateX(100%)';
@@ -154,14 +138,17 @@
             });
         });
 
-        ['PlayerNamePreview'].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(optionsTL => {
-                optionsTL.style.backgroundColor = "rgba(136, 50, 64 ,0.45)";
-                optionsTL.style.color = "white";
-                optionsTL.style.textShadow = "none";
-            });
+        document.querySelectorAll('.PlayerNamePreview').forEach(optionsTL => {
+            optionsTL.style.backgroundColor = "rgba(136, 50, 64 ,0.45)";
+            optionsTL.style.color = "white";
+            optionsTL.style.textShadow = "none";
         });
 
+
+        document.querySelectorAll('.SocialBarInner').forEach(socialbox => {
+            socialbox.style.backgroundColor = "rgba(0,0,0,1)";
+            socialbox.style.opacity = '1';
+        });
 
         document.querySelectorAll('.InvenItem').forEach(invenItem => {
             invenItem.style.backgroundColor = 'transparent';
@@ -311,7 +298,7 @@
     const crosshairSettingsModal = createBox('crosshairSettingsModal', '1002');
     crosshairSettingsModal.style.backgroundColor = 'rgb(40, 40, 40)';
 
-        const capeModal = createBox('hotbarSettingsModal', '1002');
+    const capeModal = createBox('hotbarSettingsModal', '1002');
     capeModal.style.backgroundColor = 'transparent';
     capeModal.style.justifyContent = 'center';
     capeModal.style.alignItems = 'center';
@@ -430,9 +417,9 @@
         CosmeticsButton.style.outline = '2px solid rgb(30,30,30)';
     });
     CosmeticsButton.addEventListener('click', function() {
-      capeModal.style.display = 'flex';
-      mainMenu.style.display = 'none'
-      mainHud.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';;
+        capeModal.style.display = 'flex';
+        mainMenu.style.display = 'none'
+        mainHud.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';;
         mainHud.style.backdropFilter = 'blur(5px)';
     });
     menuButtonsCon.appendChild(CosmeticsButton);
@@ -1462,7 +1449,7 @@
     </div>
 `;
 
-resolutionSettingsModal.innerHTML = `
+    resolutionSettingsModal.innerHTML = `
 <div style="width: 400px; height: 200px;">
     <label>RESOLUTION ADJUSTER</label>
     <button id="closeResolutionSettings" style="float: right; background: transparent; border: none; color: white; cursor: pointer;">✖</button>
@@ -1524,8 +1511,8 @@ resolutionSettingsModal.innerHTML = `
          <div style="display: flex; flex-direction: row; gap: 15px; margin-top : 5px; margin-bottom : 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; width: 185px; height: 185px; background: rgb(50, 50, 50); border: 2px solid rgb(60, 60, 60); border-radius: 10px; margin-top: 5px;">
         <label style=" font-size: 15px; margin-bottom: 10px; font-weight: 700;" >CURRENT VERSION</label>
-        <label>Version : 1.4</label>
-        <label style="color: cyan ; font-size: 14px;">Capes</label>
+        <label>Version : 1.4.1</label>
+        <label style="color: cyan ; font-size: 14px;">Patch Update</label>
         <button id="UpdateButton" style="margin-top: 65px; width: 150px; height: 40px; background: rgb(40, 40, 40); border: none; border-radius: 10px; color: white; font-size: 18px; cursor: pointer;">Update</button>
         </div>
         </div>
@@ -1591,7 +1578,7 @@ resolutionSettingsModal.innerHTML = `
     </div>
     </div>
 `;
-        document.getElementById('cape0').addEventListener('click', function() {
+    document.getElementById('cape0').addEventListener('click', function() {
         capesvalue = 'none';
         GM_setValue("capes", capesvalue);
     });
@@ -1685,37 +1672,37 @@ resolutionSettingsModal.innerHTML = `
         window.open('https://greasyfork.org/en/scripts/489428-deep-space-client', '_blank');
     })
 
-let canvasWidth, canvasHeight, isResolutionVisible = false, resolutionSliderContainer;
-function init() {
-    const canvas = document.getElementById('noa-canvas');
-    if (canvas) {
-        canvasWidth = canvas.width;
-        canvasHeight = canvas.height;
-        const resolutionSlider = document.getElementById('resolutionSlider');
-        const resolutionValueLabel = document.getElementById('resolutionValueLabel');
+    let canvasWidth, canvasHeight, isResolutionVisible = false, resolutionSliderContainer;
+    function init() {
+        const canvas = document.getElementById('noa-canvas');
+        if (canvas) {
+            canvasWidth = canvas.width;
+            canvasHeight = canvas.height;
+            const resolutionSlider = document.getElementById('resolutionSlider');
+            const resolutionValueLabel = document.getElementById('resolutionValueLabel');
 
-        resolutionSlider.addEventListener('input', function () {
-            const resolutionValue = (+this.value).toFixed(2);
-            resolutionValueLabel.textContent = `Resolution: ${resolutionValue}x`;
-            canvas.width = canvasWidth * this.value;
-            canvas.height = canvasHeight * this.value;
-        });
+            resolutionSlider.addEventListener('input', function () {
+                const resolutionValue = (+this.value).toFixed(2);
+                resolutionValueLabel.textContent = `Resolution: ${resolutionValue}x`;
+                canvas.width = canvasWidth * this.value;
+                canvas.height = canvasHeight * this.value;
+            });
 
-        const originalRequestPointerLock = Element.prototype.requestPointerLock;
-        Element.prototype.requestPointerLock = function () {
-            if (!isResolutionVisible) originalRequestPointerLock.call(this);
-        };
+            const originalRequestPointerLock = Element.prototype.requestPointerLock;
+            Element.prototype.requestPointerLock = function () {
+                if (!isResolutionVisible) originalRequestPointerLock.call(this);
+            };
+        }
     }
-}
-const interval = setInterval(() => {
-    if (document.getElementById('noa-canvas')) {
-        clearInterval(interval);
-        init();
-    }
-}, 100);
+    const interval = setInterval(() => {
+        if (document.getElementById('noa-canvas')) {
+            clearInterval(interval);
+            init();
+        }
+    }, 100);
 
+    let toggleKey = 'F2';
 
-    let toggleKey = 'ShiftRight';
     let boxVisible = false;
     let isSettingKey = false;
     document.addEventListener('keydown', function(event) {
@@ -1734,8 +1721,8 @@ const interval = setInterval(() => {
             resolutionSettingsModal.style.display = boxVisible ? 'none' : 'none';
             hotbarSettingsModal.style.display = boxVisible ? 'none' : 'none';
             capeModal.style.display = boxVisible ? 'none' : 'none';
-             mainHud.style.backgroundColor = 'transparent';
-             mainHud.style.backdropFilter = 'blur(0px)';
+            mainHud.style.backgroundColor = 'transparent';
+            mainHud.style.backdropFilter = 'blur(0px)';
 
             if (boxVisible && document.pointerLockElement) {
                 document.exitPointerLock();
@@ -1771,7 +1758,7 @@ const interval = setInterval(() => {
     document.getElementById('closeResolutionSettings').addEventListener('click', function() {
         resolutionSettingsModal.style.display = 'none';
     });
-        document.getElementById('closeCapeSettings').addEventListener('click', function() {
+    document.getElementById('closeCapeSettings').addEventListener('click', function() {
         capeModal.style.display = 'none';
         mainMenu.style.display = 'flex';
         mainHud.style.backgroundColor = 'transparent';

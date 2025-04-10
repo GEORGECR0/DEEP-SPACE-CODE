@@ -92,16 +92,14 @@
             EnterDiv.style.transform = 'translate(-20% , 25%)';
         });
 
-        ['Inventory' , 'SettingsMenu' , 'InviteLinkBox' , 'ShopBody ' , 'CharCustomisation '].forEach(className => {
-            document.querySelectorAll('.' + className).forEach(BloxdUIBoxes => {
-                BloxdUIBoxes.style.backgroundColor = 'transparent';
-                BloxdUIBoxes.style.border = "3px solid black";
-                BloxdUIBoxes.style.boxShadow = "none";
-                BloxdUIBoxes.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-                BloxdUIBoxes.style.backdropFilter = `blur(${blur}px)`;
-
-            });
+        document.querySelectorAll('.Inventory').forEach(BloxdUIBoxes => {
+            BloxdUIBoxes.style.backgroundColor = 'transparent';
+            BloxdUIBoxes.style.border = "3px solid black";
+            BloxdUIBoxes.style.boxShadow = "none";
+            BloxdUIBoxes.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            BloxdUIBoxes.style.backdropFilter = `blur(${blur}px)`;
         });
+
 
         document.querySelectorAll('.TitleContainer').forEach(TOP => {
             TOP.style.height = '70px';
